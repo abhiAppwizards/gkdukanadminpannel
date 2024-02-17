@@ -4,81 +4,366 @@ import './catalog_style.css'
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { FaTrash } from 'react-icons/fa'; 
+import { FaTrash } from 'react-icons/fa'
+import DropDown from './catalogcomponent/Dropdown'
 
-const Allcatalogs = ({}) => {
-  const [products, setProducts] = useState([])
-  const [vendorId] = useState('65b8831c688c1f86adf4ed19')
+const Allcatalogs = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const productsPerPage = 10
+  // const [products, setProducts] = useState([])
+  // const [vendorId] = useState('65b8831c688c1f86adf4ed19')
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token')
 
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`${config.baseURL}/vendors/${vendorId}/products`, {
-          headers: {
-            Authorization: token,
-          },
-        })
-        const data = await response.json()
-        setProducts(data)
-      } catch (error) {
-        console.error('Error fetching products:', error)
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await fetch(`${config.baseURL}/vendors/${vendorId}/products`, {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       })
+  //       const data = await response.json()
+  //       setProducts(data)
+  //     } catch (error) {
+  //       console.error('Error fetching products:', error)
+  //     }
+  //   }
+
+  //   fetchProducts()
+  // }, [vendorId])
+
+  // const handleDelete = (index) => {
+  //   console.log('Delete item at index:', index)
+  // }
+
+  // const handleEdit = () =>{
+
+  // }
+
+  const products = [
+    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
+    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
+    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
+    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
+    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
+    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
+    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
+    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
+    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
+  ]
+
+  const totalPages = Math.ceil(products.length / productsPerPage)
+  const handleClick = (type) => {
+    if (type === 'prev') {
+      setCurrentPage(currentPage > 1 ? currentPage - 1 : 1)
+    } else if (type === 'next') {
+      setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages)
+    }
+  }
+
+  const renderPageNumbers = () => {
+    let pages = []
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1) ||
+        (i === currentPage - 2 && currentPage > 2) ||
+        (i === currentPage + 2 && currentPage < totalPages - 1)
+      ) {
+        pages.push(
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i)}
+            className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
+              currentPage === i ? 'bg-blue-500 text-white' : 'text-blue-500 hover:bg-blue-200'
+            }`}
+          >
+            {i}
+          </button>,
+        )
+      } else if (i === currentPage - 3 || i === currentPage + 3) {
+        pages.push(
+          <span key={i} className="mx-1">
+            ...
+          </span>,
+        )
       }
     }
+    return pages
+  }
 
-    fetchProducts()
-  }, [vendorId])
-
-  const handleDelete = (index) => {
-    console.log('Delete item at index:', index);
-  };
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
 
   return (
     <div className="">
-      <h2 className="fw-dark fs-4">Products</h2>
-      <table className="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col">No.</th>
-            <th scope="col">Product ID</th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Product Description</th>
-            <th scope="col">Product image</th>
-            <th scope="col">Price</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* {products.map((product, index) => ( */}
-          {/* <tr key={index}> */}
-          <tr>
-            {/* <td>{index + 1}</td>
-              <td>{product.productId}</td>
-              <td>{product.productName}</td>
-              <td>{product.productDescription}</td>
-              <td>{product.productImage}</td>
-              <td>{product.price}</td>
-            <tr key={index}> */}
-            <td>1</td>
-            <td>vfe</td>
-            <td>fefe</td>
-            <td>feff</td>
-            <td>ffe</td>
-            <td>fe</td>
-            <td>
-              <FontAwesomeIcon icon={faEdit} />
-            </td>
-            <td>
-              <button className="btn btn-danger" onClick={() => handleDelete(0)}>
-                <FaTrash />
+      <div className="rounded bg-white p-5 shadow md:p-8 mb-8 flex flex-col">
+        <div className="flex w-full flex-col items-center md:flex-row">
+          <div className=" md:mb-0 md:w-1/4">
+            <h2 className="before:content-'' relative text-lg font-semibold text-heading before:absolute before:-top-0.5 before:h-8 before:rounded-tr-md before:rounded-br-md before:bg-accent ltr:before:-left-8 rtl:before:-right-8 md:before:w-1">
+              Products
+            </h2>
+          </div>
+          <div className="flex w-full flex-col items-center ms-auto md:w-2/4">
+            <form noValidate="" role="search" className="relative flex w-full items-center">
+              <label htmlFor="search" className="sr-only">
+                Search
+              </label>
+              <button className="absolute top-1/2 -translate-y-1/2 p-2 text-body outline-none start-1 focus:outline-none active:outline-none">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="h-5 w-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  ></path>
+                </svg>
               </button>
-            </td>
-          </tr>
-          {/* ))} */}
-        </tbody>
-      </table>
+              <input
+                type="text"
+                id="search"
+                name="searchText"
+                className="ps-10 pe-4 h-12 flex items-center w-full rounded-md appearance-none transition duration-300 ease-in-out text-heading text-sm focus:outline-none focus:ring-0 border border-border-base focus:border-accent"
+                placeholder="Search by Name"
+                aria-label="Search"
+                autoComplete="off"
+              />
+            </form>
+          </div>
+        </div>
+        <div className="flex w-full transition visible h-auto">
+          <div className="mt-3 flex w-full flex-col border-t border-gray-200 md:mt-8 md:flex-row md:items-center md:pt-8">
+            <div className="flex w-full ">
+              <div className="w-full">
+                <DropDown label={'Filter by Product Type'} />
+              </div>
+              <div className="w-full">
+                <div className="">
+                  <DropDown label={'Filter by Product Type'} />
+                </div>
+              </div>
+              <div className="w-full">
+                <DropDown label={'Filter by Product Type'} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-8 rounded-lg bg-white bg-light -3 md:p-8">
+        <h1 className="font-bold text-xl mb-4"> Your All Products Here..</h1>
+        <div className="relative overflow-x-auto">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Product ID
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Product Name
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Product Type
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Price
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Quantity
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentProducts.map((product) => (
+                <tr
+                  key={product.id}
+                  className="hover:bg-gray-100 bg-white border-b dark:bg-gray-800  dark:border-gray-700"
+                >
+                  <th
+                    scope="row"
+                    className="px-6 text-center py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {product.id}
+                  </th>
+                  <td className="px-6 py-4 text-center">{product.name}</td>
+                  <td className="px-6 py-4 text-center">{product.type}</td>
+                  <td className="px-6 py-4 text-center">{product.quantity}</td>
+                  <td className="px-6 py-4 text-center">{product.price}</td>
+                  <td className="text-center">
+                    <div className="flex justify-center items-center rtl:space-x-reverse">
+                      <span className="inline-block px-3 text-center py-1.5 rounded bg-red-600 text-xs whitespace-nowrap relative font-medium text-dark bg-accent bg-opacity-10 !text-accent capitalize">
+                        {product.status}
+                      </span>
+                    </div>
+                  </td>
+
+                  <td className="rc-table-cell" style={{textAlign: 'center'}}>
+                    <div className="inline-flex items-center w-auto gap-3">
+                      <a
+                        title="Edit"
+                        className="text-base transition duration-200 hover:text-heading"
+                        href="/products/ava-juice-macha-tea/edit"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20.547 20.299"
+                          fill="currentColor"
+                          width="15"
+                        >
+                          <g stroke="currentColor" strokeWidth=".4">
+                            <path
+                              data-name="Path 78"
+                              d="M18.659 12.688a.5.5 0 00-.5.5v4.423a1.5 1.5 0 01-1.494 1.494H2.691A1.5 1.5 0 011.2 17.609V4.629a1.5 1.5 0 011.494-1.494h4.419a.5.5 0 100-1H2.691A2.493 2.493 0 00.2 4.629v12.98A2.493 2.493 0 002.691 20.1h13.976a2.493 2.493 0 002.491-2.491v-4.423a.5.5 0 00-.5-.5zm0 0"
+                            ></path>
+                            <path
+                              data-name="Path 79"
+                              d="M18.96.856a2.241 2.241 0 00-3.17 0L6.899 9.739a.5.5 0 00-.128.219l-1.169 4.219a.5.5 0 00.613.613l4.219-1.169a.5.5 0 00.219-.128l8.886-8.887a2.244 2.244 0 000-3.17zm-10.971 9.21l7.273-7.273 2.346 2.346-7.273 7.273zm-.469.94l1.879 1.875-2.592.718zm11.32-7.1l-.528.528-2.346-2.345.528-.528a1.245 1.245 0 011.761 0l.585.584a1.247 1.247 0 010 1.761zm0 0"
+                            ></path>
+                          </g>
+                        </svg>
+                      </a>
+                      {/* <a
+                        title="Preview"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-base transition duration-200 hover:text-heading"
+                        href="https://pickbazar-react-rest.vercel.app/products/preview/ava-juice-macha-tea"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          width="18"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                          ></path>
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          ></path>
+                        </svg>
+                      </a> */}
+                      <button
+                        className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
+                        title="Delete"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 19.4 22.169"
+                          fill="currentColor"
+                          width="14"
+                        >
+                          <g
+                            fill="none"
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1.4"
+                          >
+                            <path
+                              data-name="Rectangle 2"
+                              d="M8.238.7h2.923a2 2 0 012 2v.769h0-6.923 0V2.7a2 2 0 012-2z"
+                            ></path>
+                            <path data-name="Line 1" d="M.7 3.469h18"></path>
+                            <path
+                              data-name="Path 77"
+                              d="M14.649 21.469h-9.9a1.385 1.385 0 01-1.38-1.279L2.085 3.469h15.231L16.029 20.19a1.385 1.385 0 01-1.38 1.279z"
+                            ></path>
+                            <path data-name="Line 2" d="M7.623 6.238V18.7"></path>
+                            <path data-name="Line 3" d="M11.777 6.238V18.7"></path>
+                          </g>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {/* Pagination */}
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={() => handleClick('prev')}
+            disabled={currentPage === 1}
+            className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
+              currentPage === 1
+                ? 'opacity-50 cursor-not-allowed'
+                : 'text-blue-500 hover:bg-blue-200'
+            }`}
+          >
+            Prev
+          </button>
+          {renderPageNumbers()}
+          <button
+            onClick={() => handleClick('next')}
+            disabled={currentPage === totalPages}
+            className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
+              currentPage === totalPages
+                ? 'opacity-50 cursor-not-allowed'
+                : 'text-blue-500 hover:bg-blue-200'
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
