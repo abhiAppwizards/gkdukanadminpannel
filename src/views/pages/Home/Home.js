@@ -54,7 +54,7 @@ function MyComponent() {
             <div className="relative">
               <button
                 data-variant="custom"
-                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 px-5 py-0 h-12 !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-accent"
+                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 py-0  !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-accent"
                 type="button"
               >
                 Today
@@ -64,7 +64,7 @@ function MyComponent() {
             <div className="relative">
               <button
                 data-variant="custom"
-                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 px-5 py-0 h-12 !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500"
+                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 py-0  !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500"
                 type="button"
               >
                 Weekly
@@ -73,7 +73,7 @@ function MyComponent() {
             <div className="relative">
               <button
                 data-variant="custom"
-                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 px-5 py-0 h-12 !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500"
+                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 py-0  !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500"
                 type="button"
               >
                 Monthly
@@ -82,7 +82,7 @@ function MyComponent() {
             <div className="relative">
               <button
                 data-variant="custom"
-                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 px-5 py-0 h-12 !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500"
+                className="inline-flex items-center justify-center flex-shrink-0 outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700 py-0  !focus:ring-0 relative z-10 !h-7 rounded-full !px-2.5 text-sm font-medium text-gray-500"
                 type="button"
               >
                 Yearly
