@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './styles.css'
 import { Container, Row, Col } from 'react-bootstrap'
 import { useState } from 'react'
-
-import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Form} from 'react-bootstrap'
 import Select from 'react-select'
-
+import axios from 'axios';
 
 const optionsData = [
   {
@@ -86,9 +87,8 @@ const optionsData = [
 
 function AllOrders() {
 
- 
-  
     const [selectedValues, setSelectedValues] = useState({ category: null })
+    const [allOrders, setAllOrders] = useState([])
   
     const handleCategoryChange = (selectedOption) => {
       setSelectedValues({
@@ -97,6 +97,26 @@ function AllOrders() {
         subsubcategory: null,
       })
     }
+
+
+    useEffect(()=>{
+      getAllOrders()
+    },[])
+
+    const getAllOrders = () =>{
+      // try {
+      //   // const response = axios.get()
+      //   console.log('allorders',response)
+      //   setAllOrders(response)
+      // } catch (err) {
+      //   console.log("error", err);
+      //   if (err.response && err.response.data && err.response.data.error) {
+      //     toast.error(err.response.data.error);
+      //   } else {
+      //     toast.error("An error occurred. Please try again.");
+      //   }
+      // }
+    };
   
     // Function to truncate text
     const truncateText = (text, maxLength) => {
@@ -107,7 +127,7 @@ function AllOrders() {
     }
   return (
     <div className="">
-
+      <ToastContainer />
       <div>
       <Row className="mb-5 mt-3">
           <Col>
@@ -160,7 +180,7 @@ function AllOrders() {
             <td>modified</td>
             <td>img</td>
             <td>13000</td>
-            <td>pending..</td>
+            <td>pending...</td>
           </tr>
           <tr>
             <td>2</td>

@@ -36,11 +36,10 @@ function DropDown({ optionsData, label }) {
                 }),
                 control: (provided, state) => ({
                   ...provided,
-                  width: '150px',
+                //   width: '450px',
                 }),
                 menu: (provided, state) => ({
                   ...provided,
-                  width: '150px',
                 }),
               }}
             />

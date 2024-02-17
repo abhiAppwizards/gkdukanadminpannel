@@ -6,6 +6,8 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 import store from './app/store/store'
+import 'tailwindcss/tailwind.css';
+
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
