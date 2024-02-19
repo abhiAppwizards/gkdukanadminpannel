@@ -82,10 +82,16 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Settings',
-    to: '/settings',
+    name: 'Reviews',
+    to: '/reviews',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
+  // {
+  //   component: CNavItem,
+  //   name: 'Settings',
+  //   to: '/settings',
+  //   icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  // },
   {
     component: CNavItem,
     name: 'Logout',
