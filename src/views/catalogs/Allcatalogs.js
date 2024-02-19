@@ -1,45 +1,79 @@
-// VendorProductList.js
 import config from 'src/config'
 import './catalog_style.css'
-import React, { useEffect, useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { FaTrash } from 'react-icons/fa'
+import React, { useState } from 'react'
 import DropDown from './catalogcomponent/Dropdown'
 
 const Allcatalogs = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 10
-  // const [products, setProducts] = useState([])
-  // const [vendorId] = useState('65b8831c688c1f86adf4ed19')
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
 
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await fetch(`${config.baseURL}/vendors/${vendorId}/products`, {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       })
-  //       const data = await response.json()
-  //       setProducts(data)
-  //     } catch (error) {
-  //       console.error('Error fetching products:', error)
-  //     }
-  //   }
+//-----------------------------------------------------------for dropdowns start
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedSubcategory, setSelectedSubcategory] = useState('')
+  const [selectedSubsubcategory, setSelectedSubsubcategory] = useState('')
 
-  //   fetchProducts()
-  // }, [vendorId])
+  const vehicles = [
+    {
+      category: 'Fourwheeler',
+      subcategories: [
+        {
+          name: 'Car',
+          subsubcategories: [{ name: 'SUV' }, { name: 'Sedan' }],
+        },
+        {
+          name: 'Truck',
+          subsubcategories: [{ name: 'Pickup' }, { name: 'Semi-truck' }],
+        },
+      ],
+    },
+    {
+      category: 'Twowheeler',
+      subcategories: [
+        { name: 'Bike', subsubcategories: [{ name: 'Sports Bike' }, { name: 'Cruiser' }] },
+        {
+          name: 'Scooter',
+          subsubcategories: [{ name: 'Electric Scooter' }, { name: 'Gas Scooter' }],
+        },
+      ],
+    },
+    {
+      category: 'Other',
+      subcategories: [
+        { name: 'Boat', subsubcategories: [{ name: 'Speedboat' }, { name: 'Sailboat' }] },
+        { name: 'Plane', subsubcategories: [{ name: 'Jet' }, { name: 'Propeller' }] },
+      ],
+    },
+  ]
 
-  // const handleDelete = (index) => {
-  //   console.log('Delete item at index:', index)
-  // }
+  const categories = vehicles.map((vehicle) => vehicle.category)
+  const subcategories =
+    vehicles
+      .find((vehicle) => vehicle.category === selectedCategory)
+      ?.subcategories.map((subcategory) => subcategory.name) || []
+  const subsubcategories =
+    vehicles
+      .find((vehicle) => vehicle.category === selectedCategory)
+      ?.subcategories.find((subcategory) => subcategory.name === selectedSubcategory)
+      ?.subsubcategories.map((subsubcategory) => subsubcategory.name) || []
 
-  // const handleEdit = () =>{
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category)
+    setSelectedSubcategory('')
+    setSelectedSubsubcategory('')
+  }
 
-  // }
+  const handleSubcategoryChange = (subcategory) => {
+    setSelectedSubcategory(subcategory)
+    setSelectedSubsubcategory('')
+  }
+
+  const handleSubsubcategoryChange = (subsubcategory) => {
+    setSelectedSubsubcategory(subsubcategory)
+  }
+
+
+  //-----------------------------------------------------------for dropdowns end
 
   const products = [
     { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
@@ -179,15 +213,34 @@ const Allcatalogs = () => {
           <div className="mt-3 flex w-full flex-col border-t border-gray-200 md:mt-8 md:flex-row md:items-center md:pt-8">
             <div className="flex w-full ">
               <div className="w-full">
-                <DropDown label={'Filter by Product Type'} />
+                <DropDown
+                  label={'Filter by Product Type'}
+                  optionsData={categories}
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                />
               </div>
               <div className="w-full">
                 <div className="">
-                  <DropDown label={'Filter by Product Type'} />
+                  {selectedCategory && (
+                    <DropDown
+                      label={'Filter by Product Type'}
+                      optionsData={subcategories}
+                      value={selectedSubcategory}
+                      onChange={handleSubcategoryChange}
+                    />
+                  )}
                 </div>
               </div>
               <div className="w-full">
-                <DropDown label={'Filter by Product Type'} />
+                {selectedSubcategory && (
+                  <DropDown
+                    label={'Filter by Product Type'}
+                    optionsData={subsubcategories}
+                    value={selectedSubsubcategory}
+                    onChange={handleSubsubcategoryChange}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -247,7 +300,7 @@ const Allcatalogs = () => {
                     </div>
                   </td>
 
-                  <td className="rc-table-cell" style={{textAlign: 'center'}}>
+                  <td className="rc-table-cell" style={{ textAlign: 'center' }}>
                     <div className="inline-flex items-center w-auto gap-3">
                       <a
                         title="Edit"
@@ -272,33 +325,6 @@ const Allcatalogs = () => {
                           </g>
                         </svg>
                       </a>
-                      {/* <a
-                        title="Preview"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-base transition duration-200 hover:text-heading"
-                        href="https://pickbazar-react-rest.vercel.app/products/preview/ava-juice-macha-tea"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          width="18"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                          ></path>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
-                        </svg>
-                      </a> */}
                       <button
                         className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
                         title="Delete"
