@@ -3,6 +3,7 @@ import './styles.css'
 import { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Link } from 'react-router-dom'
 
 function AllOrders() {
   const [searchText,setSearchText] = useState('')
@@ -353,15 +354,14 @@ function AllOrders() {
                       </span>
                     </div>
                   </td>
-
+                  
                   <td className="rc-table-cell" style={{ textAlign: 'center' }}>
                     <div className="inline-flex items-center w-auto gap-3">
-                      <a
+                      <Link
                         title="Preview"
-                        target="_blank"
                         rel="noreferrer"
                         className="text-base transition duration-200 hover:text-heading"
-                        href=""
+                        to="/orders/all/view"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -382,7 +382,7 @@ function AllOrders() {
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                           ></path>
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </td>
                 </tr>

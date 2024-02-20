@@ -5,8 +5,12 @@ import {
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilCreditCard,
+  cilBell,
+  cilList,
+  cilFile,
 } from '@coreui/icons'
-import { CNavGroup, CNavItem} from '@coreui/react'
+import { CNavGroup, CNavItem } from '@coreui/react'
 
 const _nav = [
   {
@@ -41,14 +45,14 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Return/RTO Orders',
-    to: '/rtoorders  ',
+    to: '/rtoorders',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
     name: 'Catalogs',
     to: '/catalogs',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilList} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -66,42 +70,41 @@ const _nav = [
     component: CNavItem,
     name: 'Payments',
     to: '/payments',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Advertisement',
-    to: '/advertisement',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Notice',
     to: '/notice',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Reviews',
     to: '/reviews',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
   },
   // {
-  //   component: CNavItem,
-  //   name: 'Settings',
-  //   to: '/settings',
-  //   icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  //   component: CNavGroup,
+  //   name: 'Account',
+  //   icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Settings',
+  //       to: '/settings',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Logout',
+  //       to: '/logout',
+  //     },
+  //   ],
   // },
-  {
-    component: CNavItem,
-    name: 'Logout',
-    to: '/logout  ',
-    icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
-  },
   {
     component: CNavGroup,
     name: 'Pages',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -125,12 +128,6 @@ const _nav = [
       },
     ],
   },
-  // {
-  //   component: CNavItem,
-  //   name: 'Docs',
-  //   href: 'https://coreui.io/react/docs/templates/installation/',
-  //   icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
-  // },
 ]
 
 export default _nav

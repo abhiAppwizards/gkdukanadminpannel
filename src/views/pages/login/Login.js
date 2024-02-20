@@ -110,9 +110,9 @@ const Login = () => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4" onClick={handleLogin}>
+                        <CButton color="primary" className="px-4 text-black" onClick={handleLogin}>
                           Login
-                        </CButton>
+                        </CButton>  
                       </CCol>
                       <CCol xs={6} className="text-right">
                         <Link to="/forgot-password">

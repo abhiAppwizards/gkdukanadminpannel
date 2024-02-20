@@ -12,8 +12,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 2,
@@ -21,8 +21,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 4,
@@ -30,8 +30,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 5,
@@ -39,8 +39,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 6,
@@ -48,8 +48,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 7,
@@ -57,8 +57,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 8,
@@ -66,8 +66,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 9,
@@ -75,8 +75,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 10,
@@ -84,8 +84,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 11,
@@ -93,8 +93,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 12,
@@ -102,8 +102,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 1,
@@ -111,8 +111,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 2,
@@ -120,8 +120,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 4,
@@ -129,8 +129,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 5,
@@ -138,8 +138,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 6,
@@ -147,8 +147,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 7,
@@ -156,8 +156,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 8,
@@ -165,8 +165,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
     {
       id: 9,
@@ -174,8 +174,8 @@ function Reviews() {
       amount: '200',
       created: '2',
       method: 40,
-      total: 400,
-      status: 'pending',
+      total: '01/02/2024',
+      // status: 'pending',
     },
   ]
 
@@ -227,7 +227,7 @@ function Reviews() {
 
   return (
     <div>
-      <div className="rounded bg-white p-4   shadow md:p-8 mb-8 flex flex-col">
+      <div className="rounded bg-white p-4 shadow md:p-8 mb-8 flex flex-col">
         <div className="flex w-full items-center">
           <h2 className=" relative text-lg font-semibold text-heading ">Reviews</h2>
         </div>
@@ -255,9 +255,9 @@ function Reviews() {
                 <th scope="col" className="px-6 py-3 text-center">
                   Date
                 </th>
-                <th scope="col" className="px-6 py-3 text-center">
+                {/* <th scope="col" className="px-6 py-3 text-center">
                   Actions
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody>
@@ -296,7 +296,7 @@ function Reviews() {
                   <td className="px-6 py-4 text-center">{product.method}</td>
                   <td className="px-6 py-4 text-center">{product.total}</td>
 
-                  <td className="rc-table-cell" style={{ textAlign: 'center' }}>
+                  {/* <td className="rc-table-cell" style={{ textAlign: 'center' }}>
                     <div className="inline-flex items-center w-auto gap-3">
                     <button
                         className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
@@ -330,7 +330,7 @@ function Reviews() {
                         </svg>
                       </button>
                     </div>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

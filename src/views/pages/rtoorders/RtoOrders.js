@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Form } from 'react-bootstrap'
 import Select from 'react-select'
+import { Link } from 'react-router-dom'
 
 
 
@@ -175,15 +176,14 @@ function RtoOrders() {
 
                   <td className="rc-table-cell" style={{ textAlign: 'center' }}>
                     <div className="inline-flex items-center w-auto gap-3">
-                      <a
+                      <Link
                         title="Preview"
-                        target="_blank"
                         rel="noreferrer"
                         className="text-base transition duration-200 hover:text-heading"
-                        href=""
+                        to="/rtoOrders/view"
                       >
                         <svg
-                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns="http://www.w3.org/2000/svg"x
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
@@ -201,7 +201,7 @@ function RtoOrders() {
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                           ></path>
                         </svg>
-                      </a>
+                      </Link>
                     </div>
                   </td>
                 </tr>

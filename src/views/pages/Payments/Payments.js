@@ -144,7 +144,6 @@ const Payments = ({}) => {
                     <div className="inline-flex items-center w-auto gap-3">
                       <a
                         title="Preview"
-                        target="_blank"
                         rel="noreferrer"
                         className="text-base transition duration-200 hover:text-heading"
                         href=""

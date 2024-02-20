@@ -7,84 +7,47 @@ import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { CSpinner } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
-
-const options = [
-  {
-    label: 'Category 1',
-    subcategories: [
-      {
-        label: 'Subcategory 1.1',
-        subsubcategories: [
-          {
-            label: 'Sub-subcategory 1.1.1',
-            options: [
-              { value: 'action', label: 'Action' },
-              { value: 'another-action', label: 'ss action' },
-            ],
-          },
-          {
-            label: 'Sub-subcategory 1.1.2',
-            options: [{ value: 'something-else', label: 'Something else here' }],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Category 2',
-    subcategories: [
-      {
-        label: 'Subcategory 2.1',
-        subsubcategories: [
-          {
-            label: 'Sub-subcategory 2.1.1',
-            options: [
-              { value: 'option-1', label: 'Option 1' },
-              { value: 'option-2', label: 'Option 2' },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Category 3',
-    subcategories: [
-      {
-        label: 'Subcategory 3.1',
-        subsubcategories: [
-          {
-            label: 'Sub-subcategory 3.1.1',
-            options: [
-              { value: 'foo', label: 'Foo' },
-              { value: 'bar', label: 'Bar' },
-              { value: 'baz', label: 'Baz' },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Category 4',
-    subcategories: [
-      {
-        label: 'Subcategory 4.1',
-        subsubcategories: [
-          {
-            label: 'Sub-subcategory 4.1.1',
-            options: [
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-]
+import { CFormInput } from '@coreui/react'
+import DropDown from '../catalogcomponent/Dropdown'
 
 function AddSingleProduct() {
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedSubcategory, setSelectedSubcategory] = useState('')
+  const [selectedSubsubcategory, setSelectedSubsubcategory] = useState('')
+
+  const vehicles = [
+    {
+      category: 'Fourwheeler',
+      subcategories: [
+        {
+          name: 'Car',
+          subsubcategories: [{ name: 'SUV' }, { name: 'Sedan' }],
+        },
+        {
+          name: 'Truck',
+          subsubcategories: [{ name: 'Pickup' }, { name: 'Semi-truck' }],
+        },
+      ],
+    },
+    {
+      category: 'Twowheeler',
+      subcategories: [
+        { name: 'Bike', subsubcategories: [{ name: 'Sports Bike' }, { name: 'Cruiser' }] },
+        {
+          name: 'Scooter',
+          subsubcategories: [{ name: 'Electric Scooter' }, { name: 'Gas Scooter' }],
+        },
+      ],
+    },
+    {
+      category: 'Other',
+      subcategories: [
+        { name: 'Boat', subsubcategories: [{ name: 'Speedboat' }, { name: 'Sailboat' }] },
+        { name: 'Plane', subsubcategories: [{ name: 'Jet' }, { name: 'Propeller' }] },
+      ],
+    },
+  ]
+
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   //image set code
@@ -97,56 +60,41 @@ function AddSingleProduct() {
   const handleImageDelete = (index) => {
     setImages((prevImages) => prevImages.filter((image, i) => i !== index))
   }
+
   /****************** //image set code end***************** */
+  const categories = vehicles.map((vehicle) => vehicle.category)
+  const subcategories =
+    vehicles
+      .find((vehicle) => vehicle.category === selectedCategory)
+      ?.subcategories.map((subcategory) => subcategory.name) || []
+  const subsubcategories =
+    vehicles
+      .find((vehicle) => vehicle.category === selectedCategory)
+      ?.subcategories.find((subcategory) => subcategory.name === selectedSubcategory)
+      ?.subsubcategories.map((subsubcategory) => subsubcategory.name) || []
 
-  const [selectedValues, setSelectedValues] = useState({
-    category: null,
-    subcategory: null,
-    subsubcategory: null,
-  }) 
-
-  const [selectedValue, setSelectedValue] = useState(null)
-
-  const handleCategoryChange = (selectedOption) => {
-    setSelectedValues({
-      category: selectedOption,
-      subcategory: null,
-      subsubcategory: null,
-    })
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category)
+    setSelectedSubcategory('')
+    setSelectedSubsubcategory('')
   }
 
-  const handleSubcategoryChange = (selectedOption) => {
-    setSelectedValues({
-      ...selectedValues,
-      subcategory: selectedOption,
-      subsubcategory: null,
-    })
+  const handleSubcategoryChange = (subcategory) => {
+    setSelectedSubcategory(subcategory)
+    setSelectedSubsubcategory('')
   }
 
-  const handleSubsubcategoryChange = (selectedOption) => {
-    setSelectedValues({
-      ...selectedValues,
-      subsubcategory: selectedOption,
-    })
+  const handleSubsubcategoryChange = (subsubcategory) => {
+    setSelectedSubsubcategory(subsubcategory)
   }
 
   const handleSubmit = () => {
-    const { category, subcategory, subsubcategory } = selectedValues
-    console.log('Selected category:', category?.value || category?.label)
-    console.log('Selected subcategory:', subcategory?.value || subcategory?.label)
-    console.log('Selected sub-subcategory:', subsubcategory?.value || subsubcategory?.label)
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-       navigate('/catalogs/add/single/catalog')
+      navigate('/catalogs/add/single/catalog')
     }, 3000)
-   
   }
-
-  // const handleSelectChange = (selectedOption) => {
-  //   setSelectedValue(selectedOption)
-  //   console.log('Selected value:', selectedOption)
-  // }
 
   return (
     <Container>
@@ -155,39 +103,30 @@ function AddSingleProduct() {
           {/* <Form> */}
           <Form.Group>
             <Form.Label>Select a category:</Form.Label>
-            <Select
-              value={selectedValues.category}
+            <DropDown
+              label={'Filter by Product Type'}
+              optionsData={categories}
+              value={selectedCategory}
               onChange={handleCategoryChange}
-              options={options}
-              isSearchable
-              placeholder="Search..."
             />
-            {selectedValues.category && selectedValues.category.subcategories && (
-              <>
-                <Form.Label>Select a subcategory:</Form.Label>
-                <Select
-                  value={selectedValues.subcategory}
-                  onChange={handleSubcategoryChange}
-                  options={selectedValues.category.subcategories}
-                  isSearchable
-                  placeholder="Search..."
-                />
-              </>
+            {selectedCategory && (
+              <DropDown
+                label={'Filter by Product Type'}
+                optionsData={subcategories}
+                value={selectedSubcategory}
+                onChange={handleSubcategoryChange}
+              />
             )}
-            {selectedValues.subcategory && selectedValues.subcategory.subsubcategories && (
-              <>
-                <Form.Label>Select a sub-subcategory:</Form.Label>
-                <Select
-                  value={selectedValues.subsubcategory}
-                  onChange={handleSubsubcategoryChange}
-                  options={selectedValues.subcategory.subsubcategories}
-                  isSearchable
-                  placeholder="Search..."
-                />
-              </>
+            {selectedSubcategory && (
+              <DropDown
+                label={'Filter by Product Type'}
+                optionsData={subsubcategories}
+                value={selectedSubsubcategory}
+                onChange={handleSubsubcategoryChange}
+              />
             )}
             {/* Image */}
-            {selectedValues.subsubcategory && (
+            {selectedSubsubcategory && (
               <div className="file-upload mt-3 d-flex justify-content-center axlign-items-center">
                 <Container>
                   <Row className="justify-content-center">
@@ -241,6 +180,48 @@ function AddSingleProduct() {
                 </Container>
               </div>
             )}
+            <div className="mt-7">
+              <div className="d-flex justify-content-between">
+                <div className="d-inline-block mb-3">
+                  <span style={{ display: 'block' }}>
+                    Title<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput style={{ width: '350px' }} type="text" />
+                </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    description<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput style={{ width: '350px' }} type="text" />
+                </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    Vendor Id<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput style={{ width: '350px' }} type="text" />
+                </div>
+              </div>
+              <div className="d-flex justify-content-between">
+                <div className="d-inline-block mb-3">
+                  <span style={{ display: 'block' }}>
+                    Tax Slab<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput style={{ width: '350px' }} type="text" />
+                </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    Status<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput style={{ width: '350px' }} type="text" />
+                </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    Advertising Status<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput style={{ width: '350px' }} type="text" />
+                </div>
+              </div>
+            </div>
             {loading ? (
               <div className="mt-5">
                 <Button onClick={handleSubmit} disabled>
@@ -250,7 +231,7 @@ function AddSingleProduct() {
               </div>
             ) : (
               <div className="mt-5">
-                <Button onClick={handleSubmit} >
+                <Button className="text-blue-500" onClick={handleSubmit}>
                   Submit
                 </Button>
               </div>

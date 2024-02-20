@@ -1,53 +1,11 @@
 import React from 'react'
+import View from './views/pages/View'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Home = React.lazy(() => import('./views/pages/Home/Home'))
-// const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
-// const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
-
-// Base
-// const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
-// const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
 const Cards = React.lazy(() => import('./views/base/cards/Cards'))
-// const Carousels = React.lazy(() => import('./views/base/carousels/Carousels'))
-// const Collapses = React.lazy(() => import('./views/base/collapses/Collapses'))
-// const ListGroups = React.lazy(() => import('./views/base/list-groups/ListGroups'))
-// const Navs = React.lazy(() => import('./views/base/navs/Navs'))
-// const Paginations = React.lazy(() => import('./views/base/paginations/Paginations'))
-// const Placeholders = React.lazy(() => import('./views/base/placeholders/Placeholders'))
-// const Popovers = React.lazy(() => import('./views/base/popovers/Popovers'))
-// const Progress = React.lazy(() => import('./views/base/progress/Progress'))
-// const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
-// const Tables = React.lazy(() => import('./views/base/tables/Tables'))
-// const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
-
-// Buttons
-// const Buttons = React.lazy(() => import('./views/buttons/buttons/Buttons'))
-// const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'))
-// const Dropdowns = React.lazy(() => import('./views/buttons/dropdowns/Dropdowns'))
-
-//Forms
-// const ChecksRadios = React.lazy(() => import('./views/forms/checks-radios/ChecksRadios'))
-// const FloatingLabels = React.lazy(() => import('./views/forms/floating-labels/FloatingLabels'))
-// const FormControl = React.lazy(() => import('./views/forms/form-control/FormControl'))
-// const InputGroup = React.lazy(() => import('./views/forms/input-group/InputGroup'))
-// const Layout = React.lazy(() => import('./views/forms/layout/Layout'))
-// const Range = React.lazy(() => import('./views/forms/range/Range'))
-// const Select = React.lazy(() => import('./views/forms/select/Select'))
-// const Validation = React.lazy(() => import('./views/forms/validation/Validation'))
 
 const Charts = React.lazy(() => import('./views/charts/Charts'))
-
-// Icons
-// const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
-// const Flags = React.lazy(() => import('./views/icons/flags/Flags'))
-// const Brands = React.lazy(() => import('./views/icons/brands/Brands'))
-
-// Notifications
-// const Alerts = React.lazy(() => import('./views/notifications/alerts/Alerts'))
-// const Badges = React.lazy(() => import('./views/notifications/badges/Badges'))
-// const Modals = React.lazy(() => import('./views/notifications/modals/Modals'))
-// const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 //orders
 const Pending = React.lazy(() => import('./views/pages/orders/OrderPending'))
@@ -76,13 +34,14 @@ const Reviews = React.lazy(() => import('./views/pages/reviews/Reviews'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/dashboard', name: 'Home', element: Home },
   { path: '/home', name: 'Home', element: Home },
   //orders
   { path: '/orders', name: 'Orders', element: Cards, exact: true },
   { path: '/orders/pending', name: 'Pending', element: Pending },
   { path: '/orders/cancelled', name: 'Cancelled', element: Cancelled },
   { path: '/orders/all', name: 'AllOrders', element: AllOrders },
+  { path: '/orders/all/view', name: 'view', element: View },
   //Catalogs
   { path: '/catalogs', name: 'Catalogs', element: Cards, exact: true },
   { path: '/catalogs/all', name: 'All', element: AllCatalogs },
@@ -92,6 +51,7 @@ const routes = [
   { path: '/catalogs/add/bulk', name: 'Add Bulk Products', element: AddBulkProducts },
   //rto
   { path: '/rtoorders', name: 'Rto Orders', element: RtoOrders },
+  { path: '/rtoorders/view', name: 'view', element: View },
   //Payments
   { path: '/payments', name: 'Payments', element: Payments },
   //advertisement
