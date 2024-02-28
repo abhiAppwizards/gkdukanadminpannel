@@ -50,19 +50,19 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Catalogs',
-    to: '/catalogs',
+    name: 'Products',
+    to: '/products',
     icon: <CIcon icon={cilList} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'All Catalogs',
-        to: '/catalogs/all',
+        name: 'All Products',
+        to: '/products/all',
       },
       {
         component: CNavItem,
-        name: 'Add Catalog',
-        to: '/catalogs/add',
+        name: 'Add Product',
+        to: '/products/add',
       },
     ],
   },
@@ -84,23 +84,24 @@ const _nav = [
     to: '/reviews',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
   },
-  // {
-  //   component: CNavGroup,
-  //   name: 'Account',
-  //   icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-  //   items: [
-  //     {
-  //       component: CNavItem,
-  //       name: 'Settings',
-  //       to: '/settings',
-  //     },
-  //     {
-  //       component: CNavItem,
-  //       name: 'Logout',
-  //       to: '/logout',
-  //     },
-  //   ],
-  // },
+  {
+    component: CNavGroup,
+    name: 'Details',
+    to: '/details',
+    icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Bank Details',
+        to: '/details/bankdetails',
+      },
+      {
+        component: CNavItem,
+        name: 'Address',
+        to: '/details/address',
+      },
+    ],
+  },
   {
     component: CNavGroup,
     name: 'Pages',

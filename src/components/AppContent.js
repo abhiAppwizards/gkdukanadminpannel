@@ -19,11 +19,11 @@ const AppContent = () => {
                   exact={route.exact}
                   name={route.name}
                   element={
-                    // localStorage.getItem("loginUser") !== null ? (
+                    localStorage.getItem("loginUser") !== null ? (
                     <route.element />
-                  // ) : (
-                    // <Navigate to="/login" />
-                  // )
+                  ) : (
+                    <Navigate to="/login" />
+                  )
                 }
                 />
               )

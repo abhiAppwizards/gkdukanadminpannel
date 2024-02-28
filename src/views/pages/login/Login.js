@@ -16,9 +16,10 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import config from 'src/config'
 
 const Login = () => {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const navigate = useNavigate()
@@ -31,17 +32,16 @@ const Login = () => {
 
   const handleLogin = () => {
     setError(null)
-    if (!isValidEmail(username)) {
+    if (!isValidEmail(email)) {
       setError('Invalid email address')
     } else {
-      // Assuming the API endpoint for vendor login is 'http://localhost:3000/vendors/auth/login'
-      fetch('http://localhost:8080/vendors/auth/login', {
+      fetch(`${config.baseURL}/vendor/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: username, 
+          email: email, 
           password: password,
         }),
       })
@@ -49,7 +49,7 @@ const Login = () => {
           const data = await response.json()
 
           if (!response.ok) {
-            throw new Error(data.error || 'Login failed. Please check your details and try again.')
+            throw new Error(data.message || 'Login failed. Please check your details and try again.')
           }
 
           localStorage.setItem('vendorToken', data.token)
@@ -58,7 +58,7 @@ const Login = () => {
         .then((data) => {
           console.log(data)
           // Set user email in local storage
-          localStorage.setItem('loginUser', username)
+          localStorage.setItem('loginUser', email)
 
           // Navigate to the dashboard or any other route
           navigate('/dashboard')
@@ -91,9 +91,9 @@ const Login = () => {
                       </CInputGroupText>
                       <CFormInput
                         placeholder="Email" // Assuming email is used for vendor login
-                        autoComplete="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">

@@ -1,17 +1,40 @@
 import config from 'src/config'
 import './catalog_style.css'
-import React, { useState } from 'react'
-import DropDown from './catalogcomponent/Dropdown'
+import React, { useEffect, useState } from 'react'
+import DropDown from './productComponent/Dropdown'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Allcatalogs = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 10
+  const token = localStorage.getItem('vendorToken')
+  const [products, setProducts] = useState([])
 
-
-//-----------------------------------------------------------for dropdowns start
+  //-----------------------------------------------------------for dropdowns start
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedSubcategory, setSelectedSubcategory] = useState('')
   const [selectedSubsubcategory, setSelectedSubsubcategory] = useState('')
+
+  
+  useEffect(()=>{
+    getAllProducts()
+  },[])
+
+const getAllProducts = async() =>{
+  try {
+    const response = await axios.get(`${config.baseURL}/vendor/product/products`,{
+      "headers": {
+        "authorization": token
+      }
+    })
+    console.log('All Products get Response',response.data)
+    setProducts(response.data)
+  } catch (error) {
+    console.log('error',error)
+  }
+}
+
 
   const vehicles = [
     {
@@ -72,55 +95,7 @@ const Allcatalogs = () => {
     setSelectedSubsubcategory(subsubcategory)
   }
 
-
-  //-----------------------------------------------------------for dropdowns end
-
-  const products = [
-    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
-    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
-    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
-    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
-    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
-    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
-    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 1, name: 'Hakan', type: 'Akgul', price: 22, quantity: 40, status: 'pending' },
-    { id: 2, name: 'John', type: 'Smith', price: 4, quantity: 40, status: 'pending' },
-    { id: 4, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 5, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 6, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 7, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 8, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 9, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 10, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 11, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-    { id: 12, name: 'Hakan', type: 'Akgül', price: 22, quantity: 40, status: 'pending' },
-  ]
+  //---------------------------------------------------for dropdowns end
 
   const totalPages = Math.ceil(products.length / productsPerPage)
   const handleClick = (type) => {
@@ -165,7 +140,7 @@ const Allcatalogs = () => {
 
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
+  // const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
 
   return (
     <div className="">
@@ -260,16 +235,16 @@ const Allcatalogs = () => {
                   Product Name
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
-                  Product Type
+                  Tax Slab
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
-                  Price
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Quantity
+                Description
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
                   Status
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Advertising Status
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
                   Actions
@@ -277,21 +252,21 @@ const Allcatalogs = () => {
               </tr>
             </thead>
             <tbody>
-              {currentProducts.map((product) => (
+              {products?.map((product) => (
                 <tr
-                  key={product.id}
+                  key={product._id}
                   className="hover:bg-gray-100 bg-white border-b dark:bg-gray-800  dark:border-gray-700"
                 >
                   <th
                     scope="row"
                     className="px-6 text-center py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {product.id}
+                    {product._id}
                   </th>
-                  <td className="px-6 py-4 text-center">{product.name}</td>
-                  <td className="px-6 py-4 text-center">{product.type}</td>
-                  <td className="px-6 py-4 text-center">{product.quantity}</td>
-                  <td className="px-6 py-4 text-center">{product.price}</td>
+                  <td className="px-6 py-4 text-center">{product.title}</td>
+                  <td className="px-6 py-4 text-center">{product.tax_slab}</td>
+                  <td className="px-6 py-4 text-center">{product.description}</td>
+                  <td className="px-6 py-4 text-center">{product.advertising_status}</td>
                   <td className="text-center">
                     <div className="flex justify-center items-center rtl:space-x-reverse">
                       <span className="inline-block px-3 text-center py-1.5 rounded bg-red-600 text-xs whitespace-nowrap relative font-medium text-dark bg-accent bg-opacity-10 !text-accent capitalize">
@@ -299,13 +274,13 @@ const Allcatalogs = () => {
                       </span>
                     </div>
                   </td>
-
+                
                   <td className="rc-table-cell" style={{ textAlign: 'center' }}>
                     <div className="inline-flex items-center w-auto gap-3">
-                      <a
+                      <Link
                         title="Edit"
                         className="text-base transition duration-200 hover:text-heading"
-                        href="/products/ava-juice-macha-tea/edit"
+                        to={`/products/all/${product._id}`}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -324,7 +299,7 @@ const Allcatalogs = () => {
                             ></path>
                           </g>
                         </svg>
-                      </a>
+                      </Link>
                       <button
                         className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
                         title="Delete"
@@ -363,6 +338,7 @@ const Allcatalogs = () => {
             </tbody>
           </table>
         </div>
+
         {/* Pagination */}
         <div className="flex justify-center mt-4">
           <button

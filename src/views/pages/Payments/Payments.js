@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import config from 'src/config'
+import axios from 'axios'
 
 const Payments = ({}) => {
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 10
+
+ 
 
   const products = [
     { id: 1, name: 'Hakan', amount: '200', created: '2 months ago', method: 40, status: 'pending' },

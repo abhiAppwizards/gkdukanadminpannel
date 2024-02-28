@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import DropDown from '../catalogs/catalogcomponent/Dropdown'
+import DropDown from '../products/productComponent/Dropdown'
 
 function View() {
   const [selectedStatus, setSelectedStatus] = useState('')

@@ -8,12 +8,17 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { CSpinner } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import { CFormInput } from '@coreui/react'
-import DropDown from '../catalogcomponent/Dropdown'
+import DropDown from '../productComponent/Dropdown'
+import config from 'src/config'
+import axios from 'axios'
 
 function AddSingleProduct() {
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [selectedSubcategory, setSelectedSubcategory] = useState('')
-  const [selectedSubsubcategory, setSelectedSubsubcategory] = useState('')
+  const [levelOneCategory, setLevelOneCategory] = useState('')
+  const [levelTwoCategory, setLevelTwoCategory] = useState('')
+  const [levelThreeCategory, setLevelThreeCategory] = useState('')
+  const [levelFourCategory, setLevelFourCategory] = useState('')
+
+  const token = localStorage.getItem('vendorToken')
 
   const vehicles = [
     {
@@ -65,35 +70,70 @@ function AddSingleProduct() {
   const categories = vehicles.map((vehicle) => vehicle.category)
   const subcategories =
     vehicles
-      .find((vehicle) => vehicle.category === selectedCategory)
+      .find((vehicle) => vehicle.category === levelOneCategory)
       ?.subcategories.map((subcategory) => subcategory.name) || []
   const subsubcategories =
     vehicles
-      .find((vehicle) => vehicle.category === selectedCategory)
-      ?.subcategories.find((subcategory) => subcategory.name === selectedSubcategory)
+      .find((vehicle) => vehicle.category === levelOneCategory)
+      ?.subcategories.find((subcategory) => subcategory.name === levelTwoCategory)
       ?.subsubcategories.map((subsubcategory) => subsubcategory.name) || []
 
   const handleCategoryChange = (category) => {
-    setSelectedCategory(category)
-    setSelectedSubcategory('')
-    setSelectedSubsubcategory('')
+    setLevelOneCategory(category)
+    setLevelTwoCategory('')
+    setLevelThreeCategory('')
   }
 
   const handleSubcategoryChange = (subcategory) => {
-    setSelectedSubcategory(subcategory)
-    setSelectedSubsubcategory('')
+    setLevelTwoCategory(subcategory)
+    setLevelThreeCategory('')
   }
 
   const handleSubsubcategoryChange = (subsubcategory) => {
-    setSelectedSubsubcategory(subsubcategory)
+    setLevelThreeCategory(subsubcategory)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true)
-    setTimeout(() => {
+    try {
+      const response = await axios.post(
+        `${config.baseURL}/vendor/catalog`,
+        {
+          name: 'Sample Catalog',
+          levelOneCategory_id: '65dc7730f99d505da75201f8',
+          levelTwoCategory_id: '65dc7730f99d505da75201f8',
+          levelThreeCategory_id: '65dc7730f99d505da75201f8',
+          levelFourCategory_id: '65dc7730f99d505da75201f8',
+          full_details: 'Sample details of the catalog',
+          image: 'sample-image-url',
+          valid: true,
+          tags: ['tag1', 'tag2'],
+          gray_tags: ['gray-tag1', 'gray-tag2'],
+          value_prop_tag: {
+            name: 'Value Prop Tag',
+          },
+          ad: {
+            active: true,
+            tag: 'Sample Ad Tag',
+          },
+          product_id: '65dd7a1573f60f44752155dd',
+          vendor_id: '65d4859fca3eb9522c116037',
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        },
+      )
+      console.log(response.data) 
       setLoading(false)
-      navigate('/catalogs/add/single/catalog')
-    }, 3000)
+      // toast.success('Product added successfully');
+      navigate('/products/all') ///add/single/product
+    } catch (error) {
+      console.error('Error while adding product:', error)
+      setLoading(false)
+      // toast.error('Error while adding product');
+    }
   }
 
   return (
@@ -106,27 +146,27 @@ function AddSingleProduct() {
             <DropDown
               label={'Filter by Product Type'}
               optionsData={categories}
-              value={selectedCategory}
+              value={levelOneCategory}
               onChange={handleCategoryChange}
             />
-            {selectedCategory && (
+            {levelOneCategory && (
               <DropDown
                 label={'Filter by Product Type'}
                 optionsData={subcategories}
-                value={selectedSubcategory}
+                value={levelTwoCategory}
                 onChange={handleSubcategoryChange}
               />
             )}
-            {selectedSubcategory && (
+            {levelTwoCategory && (
               <DropDown
                 label={'Filter by Product Type'}
                 optionsData={subsubcategories}
-                value={selectedSubsubcategory}
+                value={levelThreeCategory}
                 onChange={handleSubsubcategoryChange}
               />
             )}
             {/* Image */}
-            {selectedSubsubcategory && (
+            {levelThreeCategory && (
               <div className="file-upload mt-3 d-flex justify-content-center axlign-items-center">
                 <Container>
                   <Row className="justify-content-center">

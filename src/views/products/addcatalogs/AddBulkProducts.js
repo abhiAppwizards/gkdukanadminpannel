@@ -246,7 +246,6 @@ function AddBulkProducts() {
                               </Col>
                             ))}
                           </Row>
-
                           {/* Display URLs */}
                           <Row>
                             <Col>

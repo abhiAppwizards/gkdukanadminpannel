@@ -4,11 +4,32 @@ import { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Link } from 'react-router-dom'
+import config from 'src/config'
+import axios from 'axios'
 
 function AllOrders() {
   const [searchText,setSearchText] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 10
+  const token = localStorage.getItem('vendorToken')
+
+
+  useEffect(()=>{
+    getAllOrders()
+  },[])
+
+const getAllOrders = async() =>{
+  try {
+    const response = await axios.get(`${config.baseURL}/vendor/order`,{
+      "headers": {
+        "authorization": token
+      }
+    })
+    console.log('All Orders get Response',response)
+  } catch (error) {
+    console.log('error',error)
+  }
+}
 
   const products = [
     {

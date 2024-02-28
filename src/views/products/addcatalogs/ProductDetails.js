@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CButton, CFormInput } from '@coreui/react'
 
-function CatalogDetails() {
+function ProductDetails() {
   const [loading, setLoading] = useState(false)
   const [variantForms, setVariantForms] = useState(1); 
 
@@ -183,4 +183,4 @@ function CatalogDetails() {
   )
 }
 
-export default CatalogDetails
+export default ProductDetails;

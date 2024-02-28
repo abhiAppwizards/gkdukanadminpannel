@@ -1,0 +1,152 @@
+import React, { useState, useEffect } from 'react'
+import { Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Spinner } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { CFormInput } from '@coreui/react'
+import DropDown from '../productComponent/Dropdown'
+import config from 'src/config'
+import axios from 'axios'
+import { toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
+
+function AddSingleProduct() {
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [taxSlab, setTaxSlab] = useState('')
+  const [status, setStatus] = useState('')
+  const [advertisingStatus, setAdvertisingStatus] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const token = localStorage.getItem('vendorToken')
+
+  const vehicles = [
+    {
+      category: 'Fourwheeler',
+    },
+    {
+      category: 'Twowheeler',
+    },
+    {
+      category: 'Other',
+    },
+  ]
+
+  const handleChange = (e, setter) => {
+    setter(e.target.value)
+  }
+  const categories = vehicles.map((vehicle) => vehicle.category)
+
+  // const handleCategoryChange = (category) => {
+  //   setSelectedCategory(category)
+  // }
+  const handleSubmit = async () => {
+    setLoading(true)
+    try {
+      const response = await axios.post(
+        `${config.baseURL}/vendor/product/add`,
+        {
+          title,
+          description,
+          tax_slab: taxSlab,
+          status: "active",
+          advertising_status: "active",
+          category_id: '65ce086a43648af9cc83e96e',
+          category_path: 'category_path_value', 
+          images: 'image_url', 
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        },
+      )
+      console.log(response.data) // Handle response accordingly
+      setLoading(false)
+      toast.success('Product added successfully'); 
+      navigate('/products/all')            ///add/single/product
+    } catch (error) {
+      console.error('Error while adding product:', error)
+      setLoading(false);
+      toast.error('Error while adding product');
+    }
+  }
+
+  return (
+    <Container>
+      <Row>
+        <Col>
+          {/* <Form> */}
+          <Form.Group>
+            {/* <Form.Label>Select a category:</Form.Label> */}
+            {/* <DropDown
+              label={'Filter by Product Type'}
+              optionsData={categories}
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+            /> */}
+            <div className="mt-7">
+              <div className="d-flex justify-content-between">
+                <div className="d-inline-block mb-3">
+                  <span style={{ display: 'block' }}>
+                    Title<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput onChange={(e) => handleChange(e, setTitle)} style={{ width: '350px' }} type="text" />
+                </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    description<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput onChange={(e) => handleChange(e, setDescription)} style={{ width: '350px' }} type="text" />
+                </div>
+                {/* <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    Vendor Id<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput onChange={handleChange} style={{ width: '350px' }} type="text" />
+                </div> */}
+              </div>
+              {/* <div className="d-flex justify-content-between">
+                <div className="d-inline-block mb-3">
+                  <span style={{ display: 'block' }}>
+                    Tax Slab<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput onChange={(e) => handleChange(e, setTaxSlab)} style={{ width: '350px' }} type="text" />
+                </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    Status<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput onChange={(e) => handleChange(e, setStatus)} style={{ width: '350px' }} type="text" />
+                </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    Advertising Status<span style={{ color: 'red' }}>*</span>
+                  </span>
+                  <CFormInput  onChange={(e) => handleChange(e, setAdvertisingStatus)} style={{ width: '350px' }} type="text" />
+                </div>
+              </div> */}
+            </div>
+            {loading ? (
+              <div className="mt-5">
+                <Button onClick={handleSubmit} disabled>
+                  Submit
+                </Button>{' '}
+                {/* <CSpinner className="mt-5" type="border" color="primary" /> */}
+              </div>
+            ) : (
+              <div className="mt-5">
+                <Button className="text-blue-500" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </div>
+            )}
+          </Form.Group>
+          {/* </Form> */}
+        </Col>
+      </Row>
+    </Container>
+  )
+}
+
+export default AddSingleProduct
