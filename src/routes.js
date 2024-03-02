@@ -13,15 +13,19 @@ const Cancelled = React.lazy(() => import('./views/pages/orders/OrderCancelled')
 const AllOrders = React.lazy(() => import('./views/pages/orders/AllOrders'))
 
 //Details
-const Address = React.lazy(() => import('./views/pages/details/Address'))
+const Address = React.lazy(() => import('./views/pages/details/adddress/Address'))
+const EditAddress = React.lazy(() => import('./views/pages/details/adddress/EditAddress'))
 const BankDetails = React.lazy(() => import('./views/pages/details/BankDetails'))
+
+//Verification
+const Verification = React.lazy(()=> import('./views/pages/verification/Verification'))
 
 //Products
 const AllProducts = React.lazy(() => import('./views/products/Allproducts'))
 const AddCatalog = React.lazy(() => import('./views/products/addcatalogs/AddCatalog'))
-const AddSingleProduct = React.lazy(() => import('./views/products/addcatalogs/AddSingleProduct'))
+const AddSingleProduct = React.lazy(() => import('./views/products/addcatalogs/AddSingleCatalog'))
 const AddBulkProducts = React.lazy(() => import('./views/products/addcatalogs/AddBulkProducts'))
-const ProductDetails = React.lazy(() => import('./views/products/addcatalogs/ProductDetails'))
+const ProductDetails = React.lazy(() => import('./views/products/addcatalogs/AddProductDetails'))
 const EditProduct = React.lazy(()=> import('./views/products/Editproduct'))
 
 //rto
@@ -36,6 +40,12 @@ const Notice = React.lazy(() => import('./views/pages/notice/Notice'))
 const Settings = React.lazy(() => import('./views/pages/settings/Settings'))
 //Reviews
 const Reviews = React.lazy(() => import('./views/pages/reviews/Reviews'))
+//Support
+const Support = React.lazy(() => import('./views/pages/support/Support'))
+//Store
+const Store = React.lazy(() => import('./views/pages/store/Store'))
+//Media
+const Media = React.lazy(() => import('./views/pages/media/Media'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -46,18 +56,19 @@ const routes = [
   { path: '/orders/pending', name: 'Pending', element: Pending },
   { path: '/orders/cancelled', name: 'Cancelled', element: Cancelled },
   { path: '/orders/all', name: 'AllOrders', element: AllOrders },
-  { path: '/orders/all/view', name: 'view', element: View },
+  { path: '/orders/all/view/:id', name: 'view', element: View },
   //Products
   { path: '/products', name: 'Products', element: Cards, exact: true },
   { path: '/products/all', name: 'All', element: AllProducts },
   { path: '/products/all/:id', name: 'Edit Product', element: EditProduct },
   { path: '/products/add', name: 'Add', element: AddCatalog },
   { path: '/products/add/single', name: 'Single Product', element: AddSingleProduct },
-  { path: '/products/add/single/product', name: 'Add Details', element: ProductDetails },
+  { path: '/products/add/single/catalog/:id', name: 'Add Details', element: ProductDetails },
   { path: '/products/add/bulk', name: 'Add Bulk Products', element: AddBulkProducts },
   //Details
   { path: '/details', name: 'Details', element: Cards, exact: true },
   { path: '/details/address', name: 'Address', element: Address},
+  { path: '/details/address/edit/:id', name: 'Edit', element: EditAddress},
   { path: '/details/bankdetails', name: 'Bank Details', element: BankDetails},
   //rto
   { path: '/rtoorders', name: 'Rto Orders', element: RtoOrders },
@@ -72,6 +83,14 @@ const routes = [
   { path: '/settings', name: 'Settings', element: Settings },
   //Reviews
   { path: '/reviews', name: 'Reviews', element: Reviews },
+  //Support
+  { path: '/support', name: 'Support', element: Support },
+  //verification
+  { path: '/verification', name: 'Verification', element: Verification },
+  //store
+  { path: '/store', name: 'Store', element: Store },
+  //media
+  { path: '/media', name: 'Media', element: Media },
 ]
 
 export default routes

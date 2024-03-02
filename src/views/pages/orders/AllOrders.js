@@ -10,7 +10,8 @@ import axios from 'axios'
 function AllOrders() {
   const [searchText,setSearchText] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const productsPerPage = 10
+  const [ordersData, setOrdersData] = useState([])
+  const ordersDataPerPage = 10
   const token = localStorage.getItem('vendorToken')
 
 
@@ -25,191 +26,19 @@ const getAllOrders = async() =>{
         "authorization": token
       }
     })
-    console.log('All Orders get Response',response)
+    // console.log('All Orders get Response',response.data)
+    setOrdersData(response.data)
   } catch (error) {
     console.log('error',error)
   }
 }
 
-  const products = [
-    {
-      id: 1,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 2,
-      name: 'John',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 4,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 5,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 6,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 7,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 8,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 9,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 10,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 11,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 12,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 1,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 2,
-      name: 'John',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 4,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 5,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 6,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 7,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 8,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-    {
-      id: 9,
-      name: 'Hakan',
-      amount: '200',
-      created: '2 months ago',
-      method: 40,
-      total: 400,
-      status: 'pending',
-    },
-  ]
 
   const filteredOrders = searchText
-    ? products.filter((product) => product.name.toLowerCase().includes(searchText.toLowerCase()))
-    : products
+    ? ordersData.filter((product) => product.name.toLowerCase().includes(searchText.toLowerCase()))
+    : ordersData
 
-  const totalPages = Math.ceil(products.length / productsPerPage)
+  const totalPages = Math.ceil(ordersData.length / ordersDataPerPage)
   const handleClick = (type) => {
     if (type === 'prev') {
       setCurrentPage(currentPage > 1 ? currentPage - 1 : 1)
@@ -250,9 +79,9 @@ const getAllOrders = async() =>{
     return pages
   }
 
-  const indexOfLastProduct = currentPage * productsPerPage
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = filteredOrders.slice(indexOfFirstProduct, indexOfLastProduct)
+  const indexOfLastProduct = currentPage * ordersDataPerPage
+  const indexOfFirstProduct = indexOfLastProduct - ordersDataPerPage
+  const currentordersData = filteredOrders.slice(indexOfFirstProduct, indexOfLastProduct)
   return (
     <>
       <ToastContainer />
@@ -329,16 +158,10 @@ const getAllOrders = async() =>{
                   Tracking Number
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
-                  Customer
+                  Paid/Unpaid
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
-                  Products
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Order Date
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Delivery Fee
+                  Payment Method
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
                   Total
@@ -352,7 +175,7 @@ const getAllOrders = async() =>{
               </tr>
             </thead>
             <tbody>
-              {currentProducts.map((product) => (
+              {currentordersData.map((product) => (
                 <tr
                   key={product.id}
                   className="hover:bg-gray-100 bg-white border-b dark:bg-gray-800  dark:border-gray-700"
@@ -361,12 +184,10 @@ const getAllOrders = async() =>{
                     scope="row"
                     className="px-6 text-center py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {product.id}
+                    {product._id}
                   </th>
-                  <td className="px-6 py-4 text-center">{product.name}</td>
-                  <td className="px-6 py-4 text-center">{product.amount}</td>
-                  <td className="px-6 py-4 text-center">{product.created}</td>
-                  <td className="px-6 py-4 text-center">{product.method}</td>
+                  <td className="px-6 py-4 text-center">{product.paid ? 'Paid': 'Unpaid'}</td>
+                  <td className="px-6 py-4 text-center">{product.payment_method}</td>
                   <td className="px-6 py-4 text-center">{product.total}</td>
                   <td className="text-center">
                     <div className="flex justify-center items-center rtl:space-x-reverse">
@@ -382,7 +203,7 @@ const getAllOrders = async() =>{
                         title="Preview"
                         rel="noreferrer"
                         className="text-base transition duration-200 hover:text-heading"
-                        to="/orders/all/view"
+                        to={`/orders/all/view/${product._id}`}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

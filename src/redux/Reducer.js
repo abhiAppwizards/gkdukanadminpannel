@@ -1,13 +1,13 @@
 const initialState = {
-    FILES: [],
+    AddedProdutData: {},
   };
   
   const reducer = (state = initialState, action) => {
     switch (action.type) {
-      case "FilesData": 
+      case "AddedProduct": 
         return {
           ...state,
-          FILES: action.payload,
+          AddedProdutData: action.payload,
         };
       default:
         return state;

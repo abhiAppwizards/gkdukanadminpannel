@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Card({title, svg, width}) {
+function Card({title, svg, width, totalCount}) {
   return (
     <div  style={{ width: width }}>
       <div
@@ -14,7 +14,7 @@ function Card({title, svg, width}) {
           </div>
           <div className="flex w-full flex-col text-end">
             <span className="mb-1 text-base font-normal text-body">{title}</span>
-            <span className="mb-2 text-2xl font-semibold text-heading">50</span>
+            <span className="mb-2 text-2xl font-semibold text-heading">{totalCount}</span>
           </div>
         </div>
       </div>
@@ -23,9 +23,10 @@ function Card({title, svg, width}) {
 }
 
 Card.propTypes = {
-    title: PropTypes.string.isRequired,
-    svg: PropTypes.element.isRequired,
-    width: PropTypes.element.isRequired,
-  };
+  title: PropTypes.string.isRequired,
+  svg: PropTypes.element.isRequired,
+  width: PropTypes.string.isRequired,
+  totalCount: PropTypes.number.isRequired, 
+};
 
 export default Card;

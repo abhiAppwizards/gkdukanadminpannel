@@ -50,18 +50,18 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Products',
+    name: 'Catalogs',
     to: '/products',
     icon: <CIcon icon={cilList} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'All Products',
+        name: 'All Catalogs',
         to: '/products/all',
       },
       {
         component: CNavItem,
-        name: 'Add Product',
+        name: 'Add Catalog',
         to: '/products/add',
       },
     ],
@@ -85,6 +85,12 @@ const _nav = [
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: 'Support',
+    to: '/support',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  },
+  {
     component: CNavGroup,
     name: 'Details',
     to: '/details',
@@ -102,32 +108,50 @@ const _nav = [
       },
     ],
   },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Pages',
+  //   icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Login',
+  //       to: '/login',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Register',
+  //       to: '/register',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Error 404',
+  //       to: '/404',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Error 500',
+  //       to: '/500',
+  //     },
+  //   ],
+  // },
   {
-    component: CNavGroup,
-    name: 'Pages',
-    icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Login',
-        to: '/login',
-      },
-      {
-        component: CNavItem,
-        name: 'Register',
-        to: '/register',
-      },
-      {
-        component: CNavItem,
-        name: 'Error 404',
-        to: '/404',
-      },
-      {
-        component: CNavItem,
-        name: 'Error 500',
-        to: '/500',
-      },
-    ],
+    component: CNavItem,
+    name: 'Verification',
+    to: '/verification',
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Store',
+    to: '/store',
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Media',
+    to: '/media',
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
   },
 ]
 

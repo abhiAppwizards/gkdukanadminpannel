@@ -11,9 +11,9 @@ function BankDetails() {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [bankData, setBankData] = useState(null);
   const [formData, setFormData] = useState({
-    bank_name: '',
-    account_number: '',
-    ifsc_code: '',
+    ID_number: '',
+    type: '',
+    status: '',
   });
 
   const navigate = useNavigate();
@@ -26,18 +26,18 @@ function BankDetails() {
 
   const getBankDetails = async () => {
     try {
-      const response = await axios.get(`${config.baseURL}/vendor/settings/bank-details`, {
+      const response = await axios.get(`${config.baseURL}/vendor/settings/documents`, {
         headers: {
           authorization: token,
         },
       });
-      // console.log('getBankDetails', response.data);
+      console.log('get veryficationDetails', response.data);
       setBankData(response.data);
       if (response.data) {
         setFormData({
-          bank_name: response.data.bank_name || '',
-          account_number: response.data.account_number || '',
-          ifsc_code: response.data.ifsc_code || '',
+          ID_number: response.data.ID_number || '',
+          type: response.data.type || '',
+          status: response.data.status || '',
         });
       }
       setLoading(false);
@@ -50,7 +50,7 @@ function BankDetails() {
     setButtonLoading(true);
     try {
       if (bankData) {
-        await axios.put(`${config.baseURL}/vendor/settings/bank-details}`,
+        await axios.put(`${config.baseURL}/vendor/settings/documents`,
           formData,
           {
             headers: {
@@ -60,7 +60,7 @@ function BankDetails() {
         );
         toast.success('Bank details updated successfully');
       } else {
-        await axios.post(`${config.baseURL}/vendor/settings/bank-details/add`, formData, {
+        await axios.post(`${config.baseURL}/vendor/settings/documents`, formData, {
           headers: {
             authorization: token,
           },
@@ -89,7 +89,7 @@ function BankDetails() {
           <ToastContainer />
           <div className="rounded bg-white p-4 shadow md:p-8 mb-8 flex flex-row items-center justify-between">
             <div className="md:w-1/4">
-              <h2 className="relative text-lg font-semibold text-heading">Bank Details</h2>
+              <h2 className="relative text-lg font-semibold text-heading">Verify Your Documents</h2>
             </div>
           </div>
           <div className="rounded p-4 shadow md:p-8 mb-8 bg-white justify-between">
@@ -99,37 +99,37 @@ function BankDetails() {
                   {/* {bankData && ( */}
                     <>
                       <tr>
-                        <td className="font-semibold pl-2 pr-32">Bank Name :</td>
+                        <td className="font-semibold pl-2 pr-32">Id Number :</td>
                         <td className="pl-4">
                           <input
                             className="w-full lg:w-80 px-2 py-1 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.bank_name}
+                            value={formData.ID_number}
                             type="text"
-                            name="bank_name"
+                            name="ID_number"
                             onChange={handleChange}
                           />
                         </td>
                       </tr>
                       <tr>
-                        <td className="font-semibold pl-2 pr-32">Account Number :</td>
+                        <td className="font-semibold pl-2 pr-32">Document Type :</td>
                         <td className="pl-4">
                           <input
                             className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.account_number}
+                            value={formData.type}
                             type="text"
-                            name="account_number"
+                            name="type"
                             onChange={handleChange}
                           />
                         </td>
                       </tr>
                       <tr>
-                        <td className="font-semibold pl-2 pr-32">IFSC Code :</td>
+                        <td className="font-semibold pl-2 pr-32">Vender Status :</td>
                         <td className="pl-4">
                           <input
                             className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.ifsc_code}
+                            value={formData.status}
                             type="text"
-                            name="ifsc_code"
+                            name="status"
                             onChange={handleChange}
                           />
                         </td>

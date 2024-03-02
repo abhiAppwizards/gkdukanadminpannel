@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 import DropDown from './productComponent/Dropdown'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Allcatalogs = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -17,18 +19,27 @@ const Allcatalogs = () => {
   const [selectedSubsubcategory, setSelectedSubsubcategory] = useState('')
 
   
+
+  const handleDelete = (id) =>{
+    try {
+      const response = axios.delete(`${config.baseURL}/`)
+      toast.success('Product is deleted')
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(()=>{
     getAllProducts()
-  },[])
+  },[handleDelete])
 
 const getAllProducts = async() =>{
   try {
-    const response = await axios.get(`${config.baseURL}/vendor/product/products`,{
+    const response = await axios.get(`${config.baseURL}/vendor/product/`,{
       "headers": {
         "authorization": token
       }
     })
-    console.log('All Products get Response',response.data)
+    // console.log('All Products get Response',response.data)
     setProducts(response.data)
   } catch (error) {
     console.log('error',error)
@@ -36,115 +47,106 @@ const getAllProducts = async() =>{
 }
 
 
-  const vehicles = [
-    {
-      category: 'Fourwheeler',
-      subcategories: [
-        {
-          name: 'Car',
-          subsubcategories: [{ name: 'SUV' }, { name: 'Sedan' }],
-        },
-        {
-          name: 'Truck',
-          subsubcategories: [{ name: 'Pickup' }, { name: 'Semi-truck' }],
-        },
-      ],
-    },
-    {
-      category: 'Twowheeler',
-      subcategories: [
-        { name: 'Bike', subsubcategories: [{ name: 'Sports Bike' }, { name: 'Cruiser' }] },
-        {
-          name: 'Scooter',
-          subsubcategories: [{ name: 'Electric Scooter' }, { name: 'Gas Scooter' }],
-        },
-      ],
-    },
-    {
-      category: 'Other',
-      subcategories: [
-        { name: 'Boat', subsubcategories: [{ name: 'Speedboat' }, { name: 'Sailboat' }] },
-        { name: 'Plane', subsubcategories: [{ name: 'Jet' }, { name: 'Propeller' }] },
-      ],
-    },
-  ]
 
-  const categories = vehicles.map((vehicle) => vehicle.category)
-  const subcategories =
-    vehicles
-      .find((vehicle) => vehicle.category === selectedCategory)
-      ?.subcategories.map((subcategory) => subcategory.name) || []
-  const subsubcategories =
-    vehicles
-      .find((vehicle) => vehicle.category === selectedCategory)
-      ?.subcategories.find((subcategory) => subcategory.name === selectedSubcategory)
-      ?.subsubcategories.map((subsubcategory) => subsubcategory.name) || []
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category)
-    setSelectedSubcategory('')
-    setSelectedSubsubcategory('')
-  }
+  // const vehicles = [
+  //   {
+  //     category: 'Fourwheeler',
+  //     subcategories: [
+  //       {
+  //         name: 'Car',
+  //         subsubcategories: [{ name: 'SUV' }, { name: 'Sedan' }],
+  //       },
+  //       {
+  //         name: 'Truck',
+  //         subsubcategories: [{ name: 'Pickup' }, { name: 'Semi-truck' }],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     category: 'Twowheeler',
+  //     subcategories: [
+  //       { name: 'Bike', subsubcategories: [{ name: 'Sports Bike' }, { name: 'Cruiser' }] },
+  //       {
+  //         name: 'Scooter',
+  //         subsubcategories: [{ name: 'Electric Scooter' }, { name: 'Gas Scooter' }],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     category: 'Other',
+  //     subcategories: [
+  //       { name: 'Boat', subsubcategories: [{ name: 'Speedboat' }, { name: 'Sailboat' }] },
+  //       { name: 'Plane', subsubcategories: [{ name: 'Jet' }, { name: 'Propeller' }] },
+  //     ],
+  //   },
+  // ]
 
-  const handleSubcategoryChange = (subcategory) => {
-    setSelectedSubcategory(subcategory)
-    setSelectedSubsubcategory('')
-  }
+  // const categories = vehicles.map((vehicle) => vehicle.category)
+  // const subcategories =
+  //   vehicles
+  //     .find((vehicle) => vehicle.category === selectedCategory)
+  //     ?.subcategories.map((subcategory) => subcategory.name) || []
+  // const subsubcategories =
+  //   vehicles
+  //     .find((vehicle) => vehicle.category === selectedCategory)
+  //     ?.subcategories.find((subcategory) => subcategory.name === selectedSubcategory)
+  //     ?.subsubcategories.map((subsubcategory) => subsubcategory.name) || []
 
-  const handleSubsubcategoryChange = (subsubcategory) => {
-    setSelectedSubsubcategory(subsubcategory)
-  }
+  // const handleCategoryChange = (category) => {
+  //   setSelectedCategory(category)
+  //   setSelectedSubcategory('')
+  //   setSelectedSubsubcategory('')
+  // }
+
+  // const handleSubcategoryChange = (subcategory) => {
+  //   setSelectedSubcategory(subcategory)
+  //   setSelectedSubsubcategory('')
+  // }
+
+  // const handleSubsubcategoryChange = (subsubcategory) => {
+  //   setSelectedSubsubcategory(subsubcategory)
+  // }
 
   //---------------------------------------------------for dropdowns end
 
   const totalPages = Math.ceil(products.length / productsPerPage)
+
+const indexOfLastProduct = currentPage * productsPerPage;
+const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+
   const handleClick = (type) => {
     if (type === 'prev') {
-      setCurrentPage(currentPage > 1 ? currentPage - 1 : 1)
+      setCurrentPage(currentPage > 1 ? currentPage - 1 : 1);
     } else if (type === 'next') {
-      setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages)
+      setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages);
     }
-  }
+  };
 
   const renderPageNumbers = () => {
-    let pages = []
+    let pages = [];
     for (let i = 1; i <= totalPages; i++) {
-      if (
-        i === 1 ||
-        i === totalPages ||
-        (i >= currentPage - 1 && i <= currentPage + 1) ||
-        (i === currentPage - 2 && currentPage > 2) ||
-        (i === currentPage + 2 && currentPage < totalPages - 1)
-      ) {
-        pages.push(
-          <button
-            key={i}
-            onClick={() => setCurrentPage(i)}
-            className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
-              currentPage === i ? 'bg-blue-500 text-white' : 'text-blue-500 hover:bg-blue-200'
-            }`}
-          >
-            {i}
-          </button>,
-        )
-      } else if (i === currentPage - 3 || i === currentPage + 3) {
-        pages.push(
-          <span key={i} className="mx-1">
-            ...
-          </span>,
-        )
-      }
+      pages.push(
+        <button
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
+            currentPage === i ? 'bg-blue-500 text-white' : 'text-blue-500 hover:bg-blue-200'
+          }`}
+        >
+          {i}
+        </button>
+      );
     }
-    return pages
-  }
-
-  const indexOfLastProduct = currentPage * productsPerPage
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  // const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
+    return pages;
+  };
 
   return (
     <div className="">
-      <div className="rounded bg-white p-5 shadow md:p-8 mb-8 flex flex-col">
+      <ToastContainer />
+      <div className="rounded bg-white p-4 shadow md:p-8 mb-8 flex flex-col">
         <div className="flex w-full flex-col items-center md:flex-row">
           <div className=" md:mb-0 md:w-1/4">
             <h2 className="before:content-'' relative text-lg font-semibold text-heading before:absolute before:-top-0.5 before:h-8 before:rounded-tr-md before:rounded-br-md before:bg-accent ltr:before:-left-8 rtl:before:-right-8 md:before:w-1">
@@ -184,7 +186,7 @@ const getAllProducts = async() =>{
             </form>
           </div>
         </div>
-        <div className="flex w-full transition visible h-auto">
+        {/* <div className="flex w-full transition visible h-auto">
           <div className="mt-3 flex w-full flex-col border-t border-gray-200 md:mt-8 md:flex-row md:items-center md:pt-8">
             <div className="flex w-full ">
               <div className="w-full">
@@ -219,7 +221,7 @@ const getAllProducts = async() =>{
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="mb-8 rounded-lg bg-white bg-light -3 md:p-8">
@@ -235,16 +237,19 @@ const getAllProducts = async() =>{
                   Product Name
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
-                  Tax Slab
+                  MRP
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
                 Description
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
-                  Status
+                  SKU
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
-                  Advertising Status
+                  Product Weight
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  In Stock
                 </th>
                 <th scope="col" className="px-6 py-3 text-center">
                   Actions
@@ -252,7 +257,7 @@ const getAllProducts = async() =>{
               </tr>
             </thead>
             <tbody>
-              {products?.map((product) => (
+              {currentProducts?.map((product) => (
                 <tr
                   key={product._id}
                   className="hover:bg-gray-100 bg-white border-b dark:bg-gray-800  dark:border-gray-700"
@@ -263,14 +268,15 @@ const getAllProducts = async() =>{
                   >
                     {product._id}
                   </th>
-                  <td className="px-6 py-4 text-center">{product.title}</td>
-                  <td className="px-6 py-4 text-center">{product.tax_slab}</td>
+                  <td className="px-6 py-4 text-center">{product.name}</td>
+                  <td className="px-6 py-4 text-center">{product.mrp}</td>
                   <td className="px-6 py-4 text-center">{product.description}</td>
-                  <td className="px-6 py-4 text-center">{product.advertising_status}</td>
+                  <td className="px-6 py-4 text-center">{product.sku}</td>
+                  <td className="px-6 py-4 text-center">{product.weight}</td>
                   <td className="text-center">
                     <div className="flex justify-center items-center rtl:space-x-reverse">
                       <span className="inline-block px-3 text-center py-1.5 rounded bg-red-600 text-xs whitespace-nowrap relative font-medium text-dark bg-accent bg-opacity-10 !text-accent capitalize">
-                        {product.status}
+                      {product.in_stock ? 'In Stock' : 'Out of Stock'}
                       </span>
                     </div>
                   </td>
@@ -302,6 +308,7 @@ const getAllProducts = async() =>{
                       </Link>
                       <button
                         className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
+                        onClick={()=>handleDelete(product._id)}
                         title="Delete"
                       >
                         <svg
@@ -341,30 +348,26 @@ const getAllProducts = async() =>{
 
         {/* Pagination */}
         <div className="flex justify-center mt-4">
-          <button
-            onClick={() => handleClick('prev')}
-            disabled={currentPage === 1}
-            className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
-              currentPage === 1
-                ? 'opacity-50 cursor-not-allowed'
-                : 'text-blue-500 hover:bg-blue-200'
-            }`}
-          >
-            Prev
-          </button>
-          {renderPageNumbers()}
-          <button
-            onClick={() => handleClick('next')}
-            disabled={currentPage === totalPages}
-            className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
-              currentPage === totalPages
-                ? 'opacity-50 cursor-not-allowed'
-                : 'text-blue-500 hover:bg-blue-200'
-            }`}
-          >
-            Next
-          </button>
-        </div>
+        <button
+          onClick={() => handleClick('prev')}
+          disabled={currentPage === 1}
+          className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
+            currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'text-blue-500 hover:bg-blue-200'
+          }`}
+        >
+          Prev
+        </button>
+        {renderPageNumbers()}
+        <button
+          onClick={() => handleClick('next')}
+          disabled={currentPage === totalPages}
+          className={`px-3 py-1 rounded-full mx-1 focus:outline-none ${
+            currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'text-blue-500 hover:bg-blue-200'
+          }`}
+        >
+          Next
+        </button>
+      </div>
       </div>
     </div>
   )

@@ -5,9 +5,10 @@ import Select from 'react-select'
 import { Container, Row, Col } from 'react-bootstrap'
 
 function DropDown({ optionsData, value, label, onChange }) {
+
   const selectOptions = optionsData.map((option) => ({
-    value: option,
-    label: option,
+    value: option._id,
+    label: option.title,
   }))
 
   const handleChange = (selectedOption) => {
