@@ -1,59 +1,137 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import Select from 'react-select'
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { CSpinner } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
-import { CFormInput } from '@coreui/react'
+import { CFormInput,CFormTextarea } from '@coreui/react'
 import DropDown from '../productComponent/Dropdown'
 import config from 'src/config'
 import axios from 'axios'
-import { toast } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css'; 
 
 function AddSingleProduct() {
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [taxSlab, setTaxSlab] = useState('')
-  const [status, setStatus] = useState('')
-  const [advertisingStatus, setAdvertisingStatus] = useState('')
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
+  const [levelOneCategory, setLevelOneCategory] = useState('')
+  const [levelTwoCategory, setLevelTwoCategory] = useState('')
+  const [levelThreeCategory, setLevelThreeCategory] = useState('')
+  const [levelFourCategory, setLevelFourCategory] = useState('')
+  const [allCategories,setAllCategories] = useState([])
+
   const token = localStorage.getItem('vendorToken')
+
+
+
+  useEffect(()=>{
+    Categories()
+  },[])
+
+
+  const Categories = async () =>{
+    try {
+      const response = await axios.get(`${config.baseURL}/admin/categories`,{
+        headers: {
+          authorization: token,
+        }
+      })
+      console.log('Categories',response.data)
+      setAllCategories(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const vehicles = [
     {
       category: 'Fourwheeler',
+      subcategories: [
+        {
+          name: 'Car',
+          subsubcategories: [{ name: 'SUV' }, { name: 'Sedan' }],
+        },
+        {
+          name: 'Truck',
+          subsubcategories: [{ name: 'Pickup' }, { name: 'Semi-truck' }],
+        },
+      ],
     },
     {
       category: 'Twowheeler',
+      subcategories: [
+        { name: 'Bike', subsubcategories: [{ name: 'Sports Bike' }, { name: 'Cruiser' }] },
+        {
+          name: 'Scooter',
+          subsubcategories: [{ name: 'Electric Scooter' }, { name: 'Gas Scooter' }],
+        },
+      ],
     },
     {
       category: 'Other',
+      subcategories: [
+        { name: 'Boat', subsubcategories: [{ name: 'Speedboat' }, { name: 'Sailboat' }] },
+        { name: 'Plane', subsubcategories: [{ name: 'Jet' }, { name: 'Propeller' }] },
+      ],
     },
   ]
 
-  const handleChange = (e, setter) => {
-    setter(e.target.value)
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  //image set code
+  const [images, setImages] = useState([])
+  const handleFileUpload = (e) => {
+    const uploadedImages = Array.from(e.target.files)
+    setImages((prevImages) => [...prevImages, ...uploadedImages])
   }
-  const categories = vehicles.map((vehicle) => vehicle.category)
 
-  // const handleCategoryChange = (category) => {
-  //   setSelectedCategory(category)
-  // }
+  const handleImageDelete = (index) => {
+    setImages((prevImages) => prevImages.filter((image, i) => i !== index))
+  }
+
+  /****************** //image set code end***************** */
+  const categories = vehicles.map((vehicle) => vehicle.category)
+  const subcategories =
+    vehicles
+      .find((vehicle) => vehicle.category === levelOneCategory)
+      ?.subcategories.map((subcategory) => subcategory.name) || []
+      console.log('subcategories',subcategories)
+  const subsubcategories =
+    vehicles
+      .find((vehicle) => vehicle.category === levelOneCategory)
+      ?.subcategories.find((subcategory) => subcategory.name === levelTwoCategory)
+      ?.subsubcategories.map((subsubcategory) => subsubcategory.name) || []
+      console.log('subsubcategories',subsubcategories)
+
+  const handleCategoryChange = (category) => {
+    setLevelOneCategory(category)
+    setLevelTwoCategory('')
+    setLevelThreeCategory('')
+  }
+
+  const handleSubcategoryChange = (subcategory) => {
+    setLevelTwoCategory(subcategory)
+    setLevelThreeCategory('')
+  }
+
+  const handleSubsubcategoryChange = (subsubcategory) => {
+    setLevelThreeCategory(subsubcategory)
+  }
+
   const handleSubmit = async () => {
     setLoading(true)
     try {
       const response = await axios.post(
-        `${config.baseURL}/vendor/product/add`,
+        `${config.baseURL}/vendor/catalog`,
         {
-          title,
-          description,
-          tax_slab: taxSlab,
-          status: "active",
-          advertising_status: "active",
-          category_id: '65ce086a43648af9cc83e96e',
-          category_path: 'category_path_value', 
-          images: 'image_url', 
+          name: 'Sample Catalog',
+          levelOneCategory_id: '65dc7730f99d505da75201f8',
+          levelTwoCategory_id: '65dc7730f99d505da75201f8',
+          levelThreeCategory_id: '65dc7730f99d505da75201f8',
+          levelFourCategory_id: '65dc7730f99d505da75201f8',
+          full_details: 'Sample details of the catalog',
+          image: 'sample-image-url',
+          product_id: '65dd7a1573f60f44752155dd',
+          vendor_id: '65d4859fca3eb9522c116037',
         },
         {
           headers: {
@@ -61,14 +139,14 @@ function AddSingleProduct() {
           },
         },
       )
-      console.log(response.data) // Handle response accordingly
+      console.log(response.data)
       setLoading(false)
-      toast.success('Product added successfully'); 
-      navigate('/products/all')            ///add/single/product
+      // toast.success('Product added successfully');
+      navigate('/products/all') ///add/single/product
     } catch (error) {
       console.error('Error while adding product:', error)
-      setLoading(false);
-      toast.error('Error while adding product');
+      setLoading(false)
+      // toast.error('Error while adding product');
     }
   }
 
@@ -78,54 +156,103 @@ function AddSingleProduct() {
         <Col>
           {/* <Form> */}
           <Form.Group>
-            {/* <Form.Label>Select a category:</Form.Label> */}
-            {/* <DropDown
-              label={'Filter by Product Type'}
+            <Form.Label className='font-bold' >Select Catalog :</Form.Label>
+            <DropDown
+              label={'Select Level one Id'}
               optionsData={categories}
-              value={selectedCategory}
+              value={levelOneCategory}
               onChange={handleCategoryChange}
-            /> */}
+            />
+            <div className='mt-2'>
+            {levelOneCategory && (
+              <DropDown
+                label={'Select Level Two Id'}
+                optionsData={subcategories}
+                value={levelTwoCategory}
+                onChange={handleSubcategoryChange}
+              />
+            )}
+            </div>
+            <div className='mt-2'>
+            {levelTwoCategory && (
+              <DropDown
+                label={'Select Level Three Id'}
+                optionsData={subsubcategories}
+                value={levelThreeCategory}
+                onChange={handleSubsubcategoryChange}
+              />
+            )}
+            </div>
+            {/* Image */}
+            {levelThreeCategory && (
+              <div className="file-upload mt-3 d-flex justify-content-center axlign-items-center">
+                <Container>
+                  <Row className="justify-content-center">
+                    <Col md={8}>
+                      <Form.Label className="text-center mb-3">Upload a file:</Form.Label>
+                      <div className="input-group">
+                        <div className="border p-3 ">
+                          <div className="text-center">
+                            <FontAwesomeIcon icon={faCloudUploadAlt} size="4x" />
+                          </div>
+                          <div className="text-center my-3">
+                            <label htmlFor="file-upload" className="btn btn-primary">
+                              Choose File
+                            </label>
+                            <input
+                              id="file-upload"
+                              type="file"
+                              multiple
+                              onChange={handleFileUpload}
+                              style={{ display: 'none' }}
+                            />
+                          </div>
+                          {images.length > 0 && (
+                            <div>
+                              <h5 className="text-center">Uploaded Images:</h5>
+                              <Row>
+                                {images.map((image, index) => (
+                                  <Col key={index} md={3} sm={6} className="mb-3">
+                                    <div className="position-relative">
+                                      <button
+                                        className="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                                        onClick={() => handleImageDelete(index)}
+                                      >
+                                        <FontAwesomeIcon icon={faTimesCircle} />
+                                      </button>
+                                      <img
+                                        src={URL.createObjectURL(image)}
+                                        alt={`Uploaded ${index}`}
+                                        className="img-fluid"
+                                      />
+                                    </div>
+                                  </Col>
+                                ))}
+                              </Row>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </Container>
+              </div>
+            )}
             <div className="mt-7">
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-evenly">
                 <div className="d-inline-block mb-3">
                   <span style={{ display: 'block' }}>
                     Title<span style={{ color: 'red' }}>*</span>
                   </span>
-                  <CFormInput onChange={(e) => handleChange(e, setTitle)} style={{ width: '350px' }} type="text" />
+                  <CFormInput style={{ width: '350px' }} type="text" />
                 </div>
-                <div className="d-inline-block">
-                  <span style={{ display: 'block' }}>
-                    description<span style={{ color: 'red' }}>*</span>
+                <div className="inline-block">
+                  <span className="block">
+                    Description<span className="text-red-500">*</span>
                   </span>
-                  <CFormInput onChange={(e) => handleChange(e, setDescription)} style={{ width: '350px' }} type="text" />
+                  <CFormTextarea className="w-64 h-24 px-3 py-2 border border-gray-300 rounded" />
                 </div>
-                {/* <div className="d-inline-block">
-                  <span style={{ display: 'block' }}>
-                    Vendor Id<span style={{ color: 'red' }}>*</span>
-                  </span>
-                  <CFormInput onChange={handleChange} style={{ width: '350px' }} type="text" />
-                </div> */}
               </div>
-              {/* <div className="d-flex justify-content-between">
-                <div className="d-inline-block mb-3">
-                  <span style={{ display: 'block' }}>
-                    Tax Slab<span style={{ color: 'red' }}>*</span>
-                  </span>
-                  <CFormInput onChange={(e) => handleChange(e, setTaxSlab)} style={{ width: '350px' }} type="text" />
-                </div>
-                <div className="d-inline-block">
-                  <span style={{ display: 'block' }}>
-                    Status<span style={{ color: 'red' }}>*</span>
-                  </span>
-                  <CFormInput onChange={(e) => handleChange(e, setStatus)} style={{ width: '350px' }} type="text" />
-                </div>
-                <div className="d-inline-block">
-                  <span style={{ display: 'block' }}>
-                    Advertising Status<span style={{ color: 'red' }}>*</span>
-                  </span>
-                  <CFormInput  onChange={(e) => handleChange(e, setAdvertisingStatus)} style={{ width: '350px' }} type="text" />
-                </div>
-              </div> */}
             </div>
             {loading ? (
               <div className="mt-5">
@@ -150,3 +277,52 @@ function AddSingleProduct() {
 }
 
 export default AddSingleProduct
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+useEffect(()=>{
+  Categories()
+},[])
+
+
+const Categories = async () =>{
+  try {
+    const response = await axios.get(`${config.baseURL}/admin/categories`,{
+      headers: {
+        authorization: token,
+      }
+    })
+    console.log('Categories',response.data)
+    setAllCategories(response.data)
+  } catch (error) {
+    console.log(error)
+  }
+}
