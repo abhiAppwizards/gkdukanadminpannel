@@ -26,7 +26,7 @@ const getAllOrders = async() =>{
         "authorization": token
       }
     })
-    console.log('All Pending Orders get Response',response.data)
+    // console.log('All Pending Orders get Response',response.data)
     setOrdersData(response.data)
   } catch (error) {
     console.log('error',error)
@@ -176,7 +176,7 @@ const getAllOrders = async() =>{
             <tbody>
               {currentordersData.map((product) => (
                 <tr
-                  key={product.id}
+                  key={product._id}
                   className="hover:bg-gray-100 bg-white border-b dark:bg-gray-800  dark:border-gray-700"
                 >
                   <th

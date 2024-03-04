@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
 import { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Form } from 'react-bootstrap'
-import Select from 'react-select'
 import { Link } from 'react-router-dom'
 
 
@@ -41,7 +39,7 @@ function RtoOrders() {
       product.refund_reason.toLowerCase().includes(searchText.toLowerCase())
     )
   : products;
-  console.log('filteredProducts',filteredProducts)
+  // console.log('filteredProducts',filteredProducts)
 
   const totalPages = Math.ceil(products.length / productsPerPage)
   const handleClick = (type) => {
@@ -87,7 +85,7 @@ function RtoOrders() {
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-  console.log('currentProducts',currentProducts)
+  // console.log('currentProducts',currentProducts)
 
   return (
     <>

@@ -31,7 +31,7 @@ function BankDetails() {
           authorization: token,
         },
       });
-      console.log('get veryficationDetails', response.data);
+      // console.log('get veryficationDetails', response.data);
       setBankData(response.data);
       if (response.data) {
         setFormData({

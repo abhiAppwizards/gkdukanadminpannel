@@ -43,7 +43,7 @@ function Support() {
           authorization: token,
         },
       })
-      console.log('tickets..', res.data)
+      // console.log('tickets..', res.data)
       setTickets(res.data)
     } catch (error) {
       console.log(error)

@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import {
   CCard,
-  CCardBody,
-  CCardHeader,
   CCol,
   CRow,
-  CTable,
-  CTableBody,
-  CTableHeaderCell,
-  CTableRow,
-  CTableDataCell,
 } from '@coreui/react'
 import config from 'src/config'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -18,62 +11,61 @@ import { Form, Button } from 'react-bootstrap'
 import axios from 'axios'
 
 const EditProduct = () => {
-  const [product, setProduct] = useState([])
+  const [product, setProduct] = useState({
+    name:'',
+    description:'',
+    in_stock:'',
+    mrp:'',
+    sku:'',
+    weight:'',
+  })
   const token = localStorage.getItem('vendorToken')
   const params = useParams()
   const navigate = useNavigate()
 
-  const [title, setTitle] = useState()
+  const [name, setName] = useState()
   const [description, setDescription] = useState()
-  const [taxSlab, setTaxSlab] = useState()
+  const [mrp, setMrp] = useState()
   const [status, setStatus] = useState()
   const [advertisingStatus, setAdvertisingStatus] = useState()
   const [loading, setLoading] = useState()
-
 
   const handleSubmit = async () => {
     setLoading(true)
     try {
       const response = await axios.put(
-        `${config.baseURL}/vendor/product/products/${params.id}`,
-        {
-          title,
-          description,
-        },
+        `${config.baseURL}/vendor/product/catalog/${params.id}`,
+        product,
         {
           headers: {
             authorization: token,
           },
         },
       )
-      console.log(response.data) 
+      // console.log(response.data)
       setLoading(false)
-      navigate('/products/all')            
+      navigate('/products/all')
     } catch (error) {
       console.error('Error while adding product:', error)
       setLoading(false)
     }
   }
 
-  const handleChange = (e, setter) => {
-    setter(e.target.value)
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`${config.baseURL}/vendor/product/products/${params.id}`, {
+        const response = await fetch(`${config.baseURL}/vendor/product/${params.id}`, {
           headers: {
             authorization: token,
           },
         })
         const data = await response.json()
-        console.log(data)
-        setTitle(product.title)
-        setTaxSlab(product.tax_slab)
-        setStatus(product.status)
-        setAdvertisingStatus(product.advertising_status)
-        setDescription(product.description)
+        // console.log('fetchProducts',data)
         setProduct(data)
       } catch (error) {
         console.error('Error fetching products:', error)
@@ -88,76 +80,100 @@ const EditProduct = () => {
   return (
     <CRow>
       <CCol>
-        <CCard className='p-4'>
+        <CCard className="p-4">
           <Form.Group key="product._id">
             <div className="mt-7">
               <div className="d-flex justify-content-between">
                 <div className="d-inline-block mb-3">
                   <span style={{ display: 'block' }}>
-                    Title<span style={{ color: 'red' }}>*</span>
+                    Name<span style={{ color: 'red' }}>*</span>
                   </span>
-                  <CFormInput
-                    value={product.title}
-                    onChange={(e) => handleChange(e, setTitle)}
+                  <input
+                    className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                    value={product.name}
+                    onChange={handleChange}
+                    name='name'
                     style={{ width: '350px' }}
                     type="text"
                   />
                 </div>
                 <div className="d-inline-block">
                   <span style={{ display: 'block' }}>
-                    description<span style={{ color: 'red' }}>*</span>
+                    description
                   </span>
-                  <CFormInput
-                    onChange={(e) => handleChange(e, setDescription)}
+                  <input
+                    className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                    onChange={handleChange}
                     style={{ width: '350px' }}
-                    value={description}
+                    name='description'
+                    value={product.description}
                     type="text"
                   />
                 </div>
                 <div className="d-inline-block">
                   <span style={{ display: 'block' }}>
-                    Vendor Id<span style={{ color: 'red' }}>*</span>
+                    Vendor Id
                   </span>
-                  <CFormInput value={product.vendor_id}style={{ width: '350px' }} type="text" />
+                  <input className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400" value={product.vendor_id} name='vendor_id' style={{ width: '350px' }} type="text" />
                 </div>
               </div>
               <div className="d-flex justify-content-between">
                 <div className="d-inline-block mb-3">
                   <span style={{ display: 'block' }}>
-                    Tax Slab<span style={{ color: 'red' }}>*</span>
+                    MRP
                   </span>
-                  <CFormInput
-                    onChange={(e) => handleChange(e, setTaxSlab)}
+                  <input
+                    className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                    onChange={handleChange}
                     style={{ width: '350px' }}
-                    value={taxSlab}
+                    name='mrp'
+                    value={product.mrp}
                     type="text"
                   />
                 </div>
                 <div className="d-inline-block">
                   <span style={{ display: 'block' }}>
-                    Status<span style={{ color: 'red' }}>*</span>
+                    Stock
                   </span>
-                  <CFormInput
-                    onChange={(e) => handleChange(e, setStatus)}
+                  <input
+                    className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                    onChange={handleChange}
                     style={{ width: '350px' }}
-                    value={status}
-                    disabled
+                    name='in_stock'
+                    value={product.in_stock}
+                    // disabled
                     type="text"
                   />
                 </div>
                 <div className="d-inline-block">
                   <span style={{ display: 'block' }}>
-                    Advertising Status<span style={{ color: 'red' }}>*</span>
+                    Quantity
                   </span>
-                  <CFormInput
-                    onChange={(e) => handleChange(e, setAdvertisingStatus)}
+                  <input
+                    className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                    onChange={handleChange}
                     style={{ width: '350px' }}
-                    value={advertisingStatus}
-                    disabled
+                    name='sku'
+                    value={product.sku}
+                    // disabled
                     type="text"
                   />
                 </div>
               </div>
+                <div className="d-inline-block">
+                  <span style={{ display: 'block' }}>
+                    Product Weight
+                  </span>
+                  <input
+                    className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                    onChange={handleChange}
+                    style={{ width: '350px' }}
+                    name='weight'
+                    value={product.weight}
+                    // disabled
+                    type="text"
+                  />
+                </div>
             </div>
             {loading ? (
               <div className="mt-5">

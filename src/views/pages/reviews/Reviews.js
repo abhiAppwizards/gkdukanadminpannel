@@ -223,7 +223,7 @@ function Reviews() {
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
-  console.log('currentProducts', currentProducts)
+  // console.log('currentProducts', currentProducts)
 
   return (
     <div>

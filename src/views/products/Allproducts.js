@@ -20,17 +20,23 @@ const Allcatalogs = () => {
 
   
 
-  const handleDelete = (id) =>{
+  const handleDelete = async(id) =>{
     try {
-      const response = axios.delete(`${config.baseURL}/`)
+      const response = axios.delete(`${config.baseURL}/vendor/product/${id}`,{
+        headers:{
+          authorization:token
+        }
+      })
       toast.success('Product is deleted')
+      getAllProducts()
+      // console.log('product deleted',response)
     } catch (error) {
       console.log(error)
     }
   }
   useEffect(()=>{
     getAllProducts()
-  },[handleDelete])
+  },[])
 
 const getAllProducts = async() =>{
   try {
