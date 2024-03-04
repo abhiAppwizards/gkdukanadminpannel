@@ -31,7 +31,6 @@ function BankDetails() {
           authorization: token,
         },
       });
-      // console.log('getBankDetails', response.data);
       setBankData(response.data);
       if (response.data) {
         setFormData({
@@ -50,7 +49,7 @@ function BankDetails() {
     setButtonLoading(true);
     try {
       if (bankData) {
-        await axios.put(`${config.baseURL}/vendor/settings/bank-details}`,
+        await axios.put(`${config.baseURL}/vendor/settings/bank-details`,
           formData,
           {
             headers: {
@@ -69,7 +68,7 @@ function BankDetails() {
       }
     } catch (error) {
       toast.error('Failed to update bank details');
-      console.error('Error while updating bank details:', error);
+      // console.error('Error while updating bank details:', error);
     } finally {
       setButtonLoading(false);
     }
