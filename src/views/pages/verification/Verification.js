@@ -6,14 +6,14 @@ import { CSpinner } from '@coreui/react';
 import { useNavigate } from 'react-router-dom'
 import config from 'src/config';
 
-function BankDetails() {
+function VerificationDetails() {
   const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [bankData, setBankData] = useState(null);
+  const [verificationData, setVerificationData] = useState(null);
   const [formData, setFormData] = useState({
-    ID_number: '',
-    type: '',
-    status: '',
+    bank_name: '',
+    account_number: '',
+    ifsc_code: '',
   });
 
   const navigate = useNavigate();
@@ -21,23 +21,22 @@ function BankDetails() {
 
   useEffect(() => {
     setLoading(true);
-    getBankDetails();
+    getVerificationData();
   }, []);
 
-  const getBankDetails = async () => {
+  const getVerificationData = async () => {
     try {
       const response = await axios.get(`${config.baseURL}/vendor/settings/documents`, {
         headers: {
           authorization: token,
         },
       });
-      // console.log('get veryficationDetails', response.data);
-      setBankData(response.data);
+      setVerificationData(response.data);
       if (response.data) {
         setFormData({
-          ID_number: response.data.ID_number || '',
-          type: response.data.type || '',
-          status: response.data.status || '',
+          bank_name: response.data.bank_name || '',
+          account_number: response.data.account_number || '',
+          ifsc_code: response.data.ifsc_code || '',
         });
       }
       setLoading(false);
@@ -49,7 +48,7 @@ function BankDetails() {
   const handleSubmit = async () => {
     setButtonLoading(true);
     try {
-      if (bankData) {
+      if (verificationData) {
         await axios.put(`${config.baseURL}/vendor/settings/documents`,
           formData,
           {
@@ -69,7 +68,7 @@ function BankDetails() {
       }
     } catch (error) {
       toast.error('Failed to update bank details');
-      console.error('Error while updating bank details:', error);
+      // console.error('Error while updating bank details:', error);
     } finally {
       setButtonLoading(false);
     }
@@ -89,47 +88,47 @@ function BankDetails() {
           <ToastContainer />
           <div className="rounded bg-white p-4 shadow md:p-8 mb-8 flex flex-row items-center justify-between">
             <div className="md:w-1/4">
-              <h2 className="relative text-lg font-semibold text-heading">Verify Your Documents</h2>
+              <h2 className="relative text-lg font-semibold text-heading">Bank Details</h2>
             </div>
           </div>
           <div className="rounded p-4 shadow md:p-8 mb-8 bg-white justify-between">
             <div className="border w-full mt-4 p-2 rounded-md">
               <table className="table-auto">
                 <tbody>
-                  {/* {bankData && ( */}
+                  {/* {verificationData && ( */}
                     <>
                       <tr>
-                        <td className="font-semibold pl-2 pr-32">Id Number :</td>
+                        <td className="font-semibold pl-2 pr-32">Bank Name :</td>
                         <td className="pl-4">
                           <input
                             className="w-full lg:w-80 px-2 py-1 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.ID_number}
+                            value={formData.bank_name}
                             type="text"
-                            name="ID_number"
+                            name="bank_name"
                             onChange={handleChange}
                           />
                         </td>
                       </tr>
                       <tr>
-                        <td className="font-semibold pl-2 pr-32">Document Type :</td>
+                        <td className="font-semibold pl-2 pr-32">Account Number :</td>
                         <td className="pl-4">
                           <input
                             className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.type}
+                            value={formData.account_number}
                             type="text"
-                            name="type"
+                            name="account_number"
                             onChange={handleChange}
                           />
                         </td>
                       </tr>
                       <tr>
-                        <td className="font-semibold pl-2 pr-32">Vender Status :</td>
+                        <td className="font-semibold pl-2 pr-32">IFSC Code :</td>
                         <td className="pl-4">
                           <input
                             className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.status}
+                            value={formData.ifsc_code}
                             type="text"
-                            name="status"
+                            name="ifsc_code"
                             onChange={handleChange}
                           />
                         </td>
@@ -146,7 +145,7 @@ function BankDetails() {
               onClick={handleSubmit}
               disabled={buttonLoading}
             >
-              {bankData ? 'Save' : 'Submit'}
+              {verificationData ? 'Save' : 'Submit'}
             </button>
           </div>
         </div>
@@ -155,4 +154,4 @@ function BankDetails() {
   );
 }
 
-export default BankDetails;
+export default VerificationDetails;
