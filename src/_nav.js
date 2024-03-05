@@ -51,18 +51,18 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Catalogs',
-    to: '/products',
+    to: '/catalogs',
     icon: <CIcon icon={cilList} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'All Catalogs',
-        to: '/products/all',
+        to: '/catalogs/all',
       },
       {
         component: CNavItem,
         name: 'Add Catalog',
-        to: '/products/add',
+        to: '/catalogs/add',
       },
     ],
   },

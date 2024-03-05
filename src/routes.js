@@ -22,11 +22,19 @@ const Verification = React.lazy(()=> import('./views/pages/verification/Verifica
 
 //Products
 const AllProducts = React.lazy(() => import('./views/products/Allproducts'))
-const AddCatalog = React.lazy(() => import('./views/products/addcatalogs/AddCatalog'))
-const AddSingleProduct = React.lazy(() => import('./views/products/addcatalogs/AddSingleCatalog'))
+// const AddCatalog = React.lazy(() => import('./views/products/addcatalogs/AddCatalog'))
+// const AddSingleProduct = React.lazy(() => import('./views/products/addcatalogs/AddSingleCatalog'))
 const AddBulkProducts = React.lazy(() => import('./views/products/addcatalogs/AddBulkProducts'))
 const ProductDetails = React.lazy(() => import('./views/products/addcatalogs/AddProductDetails'))
 const EditProduct = React.lazy(()=> import('./views/products/Editproduct'))
+
+//Catalogs
+const AllCatalogs = React.lazy(() => import('./views/pages/catalog/AllCatalogs'))
+const AddCatalog = React.lazy(() => import('./views/pages/catalog/addcatalogs/AddCatalog'))
+const AddSingleCatalog = React.lazy(() => import('./views/pages/catalog/addcatalogs/AddSingleCatalog'))
+// const AddBulkProducts = React.lazy(() => import('./views/products/addcatalogs/AddBulkProducts'))
+// const ProductDetails = React.lazy(() => import('./views/products/addcatalogs/AddProductDetails'))
+const EditCatalog = React.lazy(()=> import('./views/pages/catalog/EditCatalog'))
 
 //rto
 const RtoOrders = React.lazy(() => import('./views/pages/rtoorders/RtoOrders'))
@@ -59,12 +67,20 @@ const routes = [
   { path: '/orders/all/view/:id', name: 'view', element: View },
   //Products
   { path: '/products', name: 'Products', element: Cards, exact: true },
-  { path: '/products/all', name: 'All', element: AllProducts },
-  { path: '/products/all/:id', name: 'Edit Product', element: EditProduct },
-  { path: '/products/add', name: 'Add', element: AddCatalog },
-  { path: '/products/add/single', name: 'Single Product', element: AddSingleProduct },
-  { path: '/products/add/single/catalog/:id', name: 'Add Details', element: ProductDetails },
+  // { path: '/products/all', name: 'All', element: AllProducts },
+  // { path: '/products/all/:id', name: 'Edit Product', element: EditProduct },
+  // { path: '/products/add', name: 'Add', element: AddCatalog },
+  // { path: '/products/add/single', name: 'Single Product', element: AddSingleProduct },
+  // { path: '/products/add/single/product/:id', name: 'Add Details', element: ProductDetails },
   { path: '/products/add/bulk', name: 'Add Bulk Products', element: AddBulkProducts },
+  //catalogs
+  { path: '/catalogs', name: 'Catalogs', element: Cards, exact: true },
+  { path: '/catalogs/all', name: 'All', element: AllCatalogs },
+  { path: '/catalogs/all/:id', name: 'Edit Catalog', element: EditCatalog},
+  { path: '/catalogs/add', name: 'Add', element: AddCatalog },
+  { path: '/catalogs/add/single', name: 'Single Catalog', element: AddSingleCatalog },
+  { path: '/catalogs/add/single/catalog/:id', name: 'Add Details', element: ProductDetails },
+  // { path: '/catalogs/add/bulk', name: 'Add Bulk Products', element: AddBulkProducts },
   //Details
   { path: '/details', name: 'Details', element: Cards, exact: true },
   { path: '/details/address', name: 'Address', element: Address},

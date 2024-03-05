@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { CSpinner } from '@coreui/react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import config from 'src/config';
 
 function Address() {
@@ -18,6 +18,7 @@ function Address() {
     phone: '',
     city: '',
   });
+  const [formChanged, setFormChanged] = useState(false); // Track if form data has changed
 
   const navigate = useNavigate();
   const token = localStorage.getItem('vendorToken');
@@ -58,9 +59,6 @@ function Address() {
           }
         );
         toast.success('Address updated successfully');
-        setTimeout(()=>{
-          setButtonLoading(false);
-        },5000)
       } else {
         await axios.post(`${config.baseURL}/vendor/settings/addresses`, formData, {
           headers: {
@@ -68,21 +66,20 @@ function Address() {
           },
         });
         toast.success('Address added successfully');
-        setTimeout(()=>{
-          setButtonLoading(false);
-        },5000)
-        
       }
     } catch (error) {
       toast.error('Failed to update address');
       console.error('Error while updating address:', error);
+    } finally {
       setButtonLoading(false);
+      setFormChanged(false); // Reset formChanged state after form submission
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setFormChanged(true); // Mark form as changed when any field value changes
   };
 
   return (
@@ -182,19 +179,18 @@ function Address() {
             </div>
             <button
               className={`border p-1 w-24 rounded-md mt-4 ${
-                buttonLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-slate-200 hover:bg-slate-100'
+                buttonLoading || !formChanged ? 'bg-gray-400 cursor-not-allowed' : 'bg-slate-200 hover:bg-slate-100'
               } font-normal`}
               onClick={handleSubmit}
-              disabled={buttonLoading}
+              disabled={buttonLoading || !formChanged}
             >
               {addressData && addressData.length > 0 ? 'Save' : 'Submit'}
             </button>
-
           </div>
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default Address
+export default Address;

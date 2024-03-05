@@ -42,7 +42,7 @@ const EditProduct = () => {
           },
         },
       )
-      // console.log(response.data)
+      console.log(response.data)
       setLoading(false)
       navigate('/products/all')
     } catch (error) {
