@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { CSpinner } from '@coreui/react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import config from 'src/config';
 
 function BankDetails() {
@@ -15,6 +15,7 @@ function BankDetails() {
     account_number: '',
     ifsc_code: '',
   });
+  const [isDirty, setIsDirty] = useState(false); 
 
   const navigate = useNavigate();
   const token = localStorage.getItem('vendorToken');
@@ -68,15 +69,16 @@ function BankDetails() {
       }
     } catch (error) {
       toast.error('Failed to update bank details');
-      // console.error('Error while updating bank details:', error);
     } finally {
       setButtonLoading(false);
+      setIsDirty(false)
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setIsDirty(true); 
   };
 
   return (
@@ -95,55 +97,53 @@ function BankDetails() {
             <div className="border w-full mt-4 p-2 rounded-md">
               <table className="table-auto">
                 <tbody>
-                  {/* {bankData && ( */}
-                    <>
-                      <tr>
-                        <td className="font-semibold pl-2 pr-32">Bank Name :</td>
-                        <td className="pl-4">
-                          <input
-                            className="w-full lg:w-80 px-2 py-1 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.bank_name}
-                            type="text"
-                            name="bank_name"
-                            onChange={handleChange}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="font-semibold pl-2 pr-32">Account Number :</td>
-                        <td className="pl-4">
-                          <input
-                            className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.account_number}
-                            type="text"
-                            name="account_number"
-                            onChange={handleChange}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="font-semibold pl-2 pr-32">IFSC Code :</td>
-                        <td className="pl-4">
-                          <input
-                            className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
-                            value={formData.ifsc_code}
-                            type="text"
-                            name="ifsc_code"
-                            onChange={handleChange}
-                          />
-                        </td>
-                      </tr>
-                    </>
-                  {/* )} */}
+                  <>
+                    <tr>
+                      <td className="font-semibold pl-2 pr-32">Bank Name :</td>
+                      <td className="pl-4">
+                        <input
+                          className="w-full lg:w-80 px-2 py-1 border border-gray-300 rounded focus:outline-blue-400"
+                          value={formData.bank_name}
+                          type="text"
+                          name="bank_name"
+                          onChange={handleChange}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold pl-2 pr-32">Account Number :</td>
+                      <td className="pl-4">
+                        <input
+                          className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                          value={formData.account_number}
+                          type="text"
+                          name="account_number"
+                          onChange={handleChange}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="font-semibold pl-2 pr-32">IFSC Code :</td>
+                      <td className="pl-4">
+                        <input
+                          className="w-full lg:w-80 px-2 py-1 mt-2 border border-gray-300 rounded focus:outline-blue-400"
+                          value={formData.ifsc_code}
+                          type="text"
+                          name="ifsc_code"
+                          onChange={handleChange}
+                        />
+                      </td>
+                    </tr>
+                  </>
                 </tbody>
               </table>
             </div>
             <button
               className={`border p-1 w-24 rounded-md mt-4 ${
-                buttonLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-slate-200 hover:bg-slate-100'
+                buttonLoading || !isDirty ? 'bg-gray-400 cursor-not-allowed' : 'bg-slate-200 hover:bg-slate-100'
               } font-normal`}
               onClick={handleSubmit}
-              disabled={buttonLoading}
+              disabled={buttonLoading || !isDirty}
             >
               {bankData ? 'Save' : 'Submit'}
             </button>

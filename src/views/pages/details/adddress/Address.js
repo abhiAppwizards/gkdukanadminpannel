@@ -18,7 +18,7 @@ function Address() {
     phone: '',
     city: '',
   });
-  const [formChanged, setFormChanged] = useState(false); // Track if form data has changed
+  const [formChanged, setFormChanged] = useState(false); 
 
   const navigate = useNavigate();
   const token = localStorage.getItem('vendorToken');
@@ -72,14 +72,14 @@ function Address() {
       console.error('Error while updating address:', error);
     } finally {
       setButtonLoading(false);
-      setFormChanged(false); // Reset formChanged state after form submission
+      setFormChanged(false); 
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setFormChanged(true); // Mark form as changed when any field value changes
+    setFormChanged(true); 
   };
 
   return (

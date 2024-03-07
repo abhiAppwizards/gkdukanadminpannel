@@ -6,6 +6,7 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Support() {
   const [show, setShow] = useState(false)
@@ -143,12 +144,9 @@ function Support() {
             <div>
               {tickets &&
                 tickets.map((ticket) => (
-                  <div
-                    key={ticket._id}
-                    className="rounded bg-white p-3 shadow md:p-4 mb-2"
-                  >
-                    {ticket._id}
-                  </div>
+                  <Link to={`/support/messages/${ticket._id}`} key={ticket._id}>
+                    <div className="rounded bg-white p-3 shadow md:p-4 mb-2">{ticket._id}</div>
+                  </Link>
                 ))}
             </div>
           </div>

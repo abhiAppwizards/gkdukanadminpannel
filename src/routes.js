@@ -50,6 +50,7 @@ const Settings = React.lazy(() => import('./views/pages/settings/Settings'))
 const Reviews = React.lazy(() => import('./views/pages/reviews/Reviews'))
 //Support
 const Support = React.lazy(() => import('./views/pages/support/Support'))
+const SupportMessages = React.lazy(() => import('./views/pages/support/TicketMessages'))
 //Store
 const Store = React.lazy(() => import('./views/pages/store/Store'))
 //Media
@@ -101,6 +102,7 @@ const routes = [
   { path: '/reviews', name: 'Reviews', element: Reviews },
   //Support
   { path: '/support', name: 'Support', element: Support },
+  { path: '/support/messages/:id', name: 'Messages', element: SupportMessages },
   //verification
   { path: '/verification', name: 'Verification', element: Verification },
   //store
