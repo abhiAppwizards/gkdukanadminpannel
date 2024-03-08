@@ -84,7 +84,7 @@ const options = [
   },
 ]
 
-function AddSingleProduct() {
+function AddBulkProducts() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   //image set code
@@ -103,9 +103,24 @@ function AddSingleProduct() {
     category: null,
     subcategory: null,
     subsubcategory: null,
-  }) 
+  })
 
-  const [selectedValue, setSelectedValue] = useState(null)
+  const [copiedUrl, setCopiedUrl] = useState(null)
+
+  // Function to copy URL to clipboard
+  const handleCopyUrl = (url) => {
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        setCopiedUrl(url)
+        setTimeout(() => {
+          setCopiedUrl(null)
+        }, 2000) // Reset copiedUrl after 2 seconds
+      })
+      .catch((error) => {
+        console.error('Failed to copy:', error)
+      })
+  }
 
   const handleCategoryChange = (selectedOption) => {
     setSelectedValues({
@@ -138,9 +153,8 @@ function AddSingleProduct() {
     setLoading(true)
     setTimeout(() => {
       setLoading(false)
-       navigate('/catalogs/add/single/catalog')
+      //    navigate('/catalogs/add/single/catalog')
     }, 3000)
-   
   }
 
   // const handleSelectChange = (selectedOption) => {
@@ -190,9 +204,9 @@ function AddSingleProduct() {
             {selectedValues.subsubcategory && (
               <div className="file-upload mt-3 d-flex justify-content-center axlign-items-center">
                 <Container>
-                  <Row className="justify-content-center">
+                  <Row className="justify-content-start">
                     <Col md={8}>
-                      <Form.Label className="text-center mb-3">Upload a file:</Form.Label>
+                      <Form.Label className="text-center mb-3">Upload Images:</Form.Label>
                       <div className="input-group">
                         <div className="border p-3 ">
                           <div className="text-center">
@@ -210,30 +224,46 @@ function AddSingleProduct() {
                               style={{ display: 'none' }}
                             />
                           </div>
-                          {images.length > 0 && (
-                            <div>
-                              <h5 className="text-center">Uploaded Images:</h5>
-                              <Row>
-                                {images.map((image, index) => (
-                                  <Col key={index} md={3} sm={6} className="mb-3">
-                                    <div className="position-relative">
-                                      <button
-                                        className="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
-                                        onClick={() => handleImageDelete(index)}
-                                      >
-                                        <FontAwesomeIcon icon={faTimesCircle} />
-                                      </button>
-                                      <img
-                                        src={URL.createObjectURL(image)}
-                                        alt={`Uploaded ${index}`}
-                                        className="img-fluid"
-                                      />
+                          <Row>
+                            {/* Render images */}
+                            {images.map((image, index) => (
+                              <Col key={index} md={3} sm={6} className="mb-3">
+                                <div className="position-relative">
+                                  <button
+                                    className="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                                    onClick={() => handleImageDelete(index)}
+                                  >
+                                    <FontAwesomeIcon icon={faTimesCircle} />
+                                  </button>
+                                  <div className="ratio ratio-1x1">
+                                    <img
+                                      src={URL.createObjectURL(image)}
+                                      alt={`Uploaded ${index}`}
+                                      className="img-fluid"
+                                    />
+                                  </div>
+                                </div>
+                              </Col>
+                            ))}
+                          </Row>
+                          {/* Display URLs */}
+                          <Row>
+                            <Col>
+                              {images.map((image, index) => (
+                                <div key={index} className="mb-3">
+                                  <div className="card text-center" style={{ width: '100%', height: '50px' }}>
+                                    <div className="card-body">
+                                      <div className="position-relative">
+                                        <div className="card-text font-weight-bold">
+                                          URL: {URL.createObjectURL(image)}
+                                        </div>
+                                      </div>
                                     </div>
-                                  </Col>
-                                ))}
-                              </Row>
-                            </div>
-                          )}
+                                  </div>
+                                </div>
+                              ))}
+                            </Col>
+                          </Row>
                         </div>
                       </div>
                     </Col>
@@ -250,9 +280,7 @@ function AddSingleProduct() {
               </div>
             ) : (
               <div className="mt-5">
-                <Button onClick={handleSubmit} >
-                  Submit
-                </Button>
+                <Button onClick={handleSubmit}>Submit</Button>
               </div>
             )}
           </Form.Group>
@@ -263,4 +291,4 @@ function AddSingleProduct() {
   )
 }
 
-export default AddSingleProduct
+export default AddBulkProducts

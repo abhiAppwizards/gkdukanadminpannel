@@ -13,7 +13,7 @@ const AddCatalog = () => {
               </h6>
             </div>
             <div className="d-flex gap-5">
-              <Link to="/catalogs/add/single">
+              <Link to="/products/add/single">
                 <button type="button" className="btn btn-outline-danger">
                   Add Catalogs in Single
                 </button>

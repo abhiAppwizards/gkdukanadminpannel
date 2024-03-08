@@ -12,6 +12,21 @@ const Cancelled = React.lazy(() => import('./views/pages/orders/OrderCancelled')
 const AllOrders = React.lazy(() => import('./views/pages/orders/AllOrders'))
 const View = React.lazy(() => import('./views/pages/orders/View'))
 
+//Details
+const Address = React.lazy(() => import('./views/pages/details/adddress/Address'))
+const EditAddress = React.lazy(() => import('./views/pages/details/adddress/EditAddress'))
+const BankDetails = React.lazy(() => import('./views/pages/details/BankDetails'))
+
+//Verification
+const Verification = React.lazy(()=> import('./views/pages/verification/Verification'))
+
+//Products
+const AllProducts = React.lazy(() => import('./views/products/Allproducts'))
+// const AddCatalog = React.lazy(() => import('./views/products/addcatalogs/AddCatalog'))
+// const AddSingleProduct = React.lazy(() => import('./views/products/addcatalogs/AddSingleCatalog'))
+const ProductDetails = React.lazy(() => import('./views/products/addcatalogs/AddProductDetails'))
+const EditProduct = React.lazy(()=> import('./views/products/Editproduct'))
+
 //Catalogs
 const AllCatalogs = React.lazy(() => import('./views/pages/catalogs/Allcatalogs'))
 const AddCatalog = React.lazy(() => import('./views/pages/catalogs/addcatalogs/Addcatalog'))
@@ -29,13 +44,10 @@ const AddVendor = React.lazy(()=> import('./views/pages/vendors/AddVendor'))
 const VendorView = React.lazy(()=> import('./views/pages/vendors/vendorView'))
 
 //Reviews
-const Reviews = React.lazy(() => import('./views/pages/reviews/Reviews'))
 //Attributes
 const AllAttributes = React.lazy(() => import('./views/pages/attributes/AllAttributes'))
 
 //Support
-const Support = React.lazy(() => import('./views/pages/support/Support'))
-const SupportMessages = React.lazy(() => import('./views/pages/support/TicketMessages'))
 
 //rto
 const RtoOrders = React.lazy(() => import('./views/pages/rtoorders/RtoOrders'))
@@ -47,10 +59,19 @@ const Advertisement = React.lazy(() => import('./views/pages/advertisement/Adver
 const Notice = React.lazy(() => import('./views/pages/notice/Notice'))
 //Settings
 const Settings = React.lazy(() => import('./views/pages/settings/Settings'))
+//Reviews
+const Reviews = React.lazy(() => import('./views/pages/reviews/Reviews'))
+//Support
+const Support = React.lazy(() => import('./views/pages/support/Support'))
+const SupportMessages = React.lazy(() => import('./views/pages/support/TicketMessages'))
+//Store
+const Store = React.lazy(() => import('./views/pages/store/Store'))
+//Media
+const Media = React.lazy(() => import('./views/pages/media/Media'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/dashboard', name: 'Home', element: Home },
   { path: '/home', name: 'Home', element: Home },
   
   //orders
@@ -62,6 +83,7 @@ const routes = [
   //Catalogs
   { path: '/catalogs', name: 'Catalogs', element: Cards, exact: true },
   { path: '/catalogs/all', name: 'All', element: AllCatalogs },
+  // { path: '/catalogs/all/:id', name: 'Edit Catalog', element: EditCatalog},
   { path: '/catalogs/add', name: 'Add', element: AddCatalog },
   { path: '/catalogs/add/single', name: 'Single Product', element: AddSingleProduct },
   { path: '/catalogs/add/single/catalog', name: 'Add Details', element: CatalogDetails },

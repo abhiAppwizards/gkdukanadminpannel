@@ -1,7 +1,7 @@
-export const FilesAction = (val) => {
+export const ProductAction = (val) => {
     // console.log('val... ', val)
     return {
-      type: "FilesData",
+      type: "AddedProduct",
       payload: val,
     };
   };

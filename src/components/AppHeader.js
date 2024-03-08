@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
@@ -21,6 +21,12 @@ import { logo } from 'src/assets/brand/logo'
 const AppHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.clear()
+    navigate('/login')
+  }
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -35,33 +41,37 @@ const AppHeader = () => {
           <CIcon icon={logo} height={48} alt="Logo" />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
-          {/* <CNavItem>
-            <CNavLink to="/dashboard" component={NavLink}>
+          <CNavItem>
+            {/* <CNavLink to="/dashboard" component={NavLink}>
               Dashboard
-            </CNavLink>
+            </CNavLink> */}
           </CNavItem>
           <CNavItem>
             <CNavLink href="#">Vendors</CNavLink>
           </CNavItem>
-          <CNavItem>
+          
+          {/* <CNavItem>
             <CNavLink href="#">Settings</CNavLink>
           </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav>
           <CNavItem>
-            <CNavLink href="#">
+            {/* <CNavLink href="#">
               <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
+            </CNavLink> */}
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">
+            {/* <CNavLink href="#">
               <CIcon icon={cilList} size="lg" />
-            </CNavLink>
+            </CNavLink> */}
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">
+            {/* <CNavLink href="#">
               <CIcon icon={cilEnvelopeOpen} size="lg" />
-            </CNavLink>
+            </CNavLink> */}
+          </CNavItem>
+          <CNavItem>
+            <CNavLink className='cursor-pointer' onClick={handleLogout}>Logout</CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav className="ms-3">

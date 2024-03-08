@@ -56,7 +56,7 @@ const Login = () => {
           return data
         })
         .then((data) => {
-          console.log(data)
+          // console.log(data)
           // Set user email in local storage
           localStorage.setItem('loginadmin', email)
 

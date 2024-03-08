@@ -1,0 +1,187 @@
+import React, { useEffect, useState } from 'react'
+import { CFormInput, CSpinner } from '@coreui/react'
+import { Form, Button } from 'react-bootstrap'
+import config from 'src/config'
+import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
+
+function Address() {
+  const [show, setShow] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [buttonLoading, setButtonLoading] = useState(false)
+  const [address, setAddress] = useState('')
+  const [formData, setFormData] = useState({
+    address_line_1: '',
+    state: '',
+    pin_code: '',
+    country: '',
+    phone: '',
+    city: '',
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
+
+  const navigate = useNavigate()
+
+  const token = localStorage.getItem('vendorToken')
+
+  const handleShow = () => {
+    setShow(!show)
+  }
+
+  const handleSave = async () => {
+    try {
+      const response = await axios.put(`${config.baseURL}`, formData)
+      console.log('saved', response)
+      toast.success('Address saved successfully')
+    } catch (error) {
+      console.error('Error saving address:', error)
+      toast.error('Failed to save address')
+    }
+  }
+
+  useEffect(() => {
+    setLoading(true)
+    getAddress()
+  }, [])
+
+  const getAddress = async () => {
+    try {
+      const response = await axios.get(`${config.baseURL}/vendor/settings/addresses`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      setAddress(response.data)
+      setFormData(response.data[0])
+      setLoading(false)
+    } catch (error) {
+      console.error('Error fetching address:', error)
+      toast.error('Failed to fetch address')
+    }
+  }
+
+  return (
+    <>
+      {loading ? (
+        <CSpinner className="text-blue-600" />
+      ) : (
+        <div>
+          <ToastContainer />
+          <div className="rounded bg-white p-4 shadow md:p-8 mb-8 flex flex-row items-center justify-between">
+            <div className="md:w-1/4">
+              <h2 className=" relative text-lg font-semibold text-heading ">Address</h2>
+            </div>
+            {address.length === 0 && (
+              <div>
+                <button
+                  onClick={handleShow}
+                  className="border p-2 rounded-md bg-slate-200 hover:bg-slate-100 font-normal"
+                >
+                  Add your Address
+                </button>
+              </div>
+            )}
+          </div>
+          {/* {show && ( */}
+            <div className="rounded p-4 shadow md:p-8 mb-8 bg-white justify-between">
+              <div className="mt-7">
+                <div className="d-flex justify-between">
+                  <div className="d-inline-block mb-3">
+                    <span style={{ display: 'block' }}>
+                      Address<span style={{ color: 'red' }}>*</span>
+                    </span>
+                    <CFormInput
+                      className="bg-white"
+                      style={{ width: '350px' }}
+                      type="text"
+                      name="address_line_1"
+                      value={formData.address_line_1}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="d-inline-block">
+                    <span style={{ display: 'block' }}>
+                      State<span style={{ color: 'red' }}>*</span>
+                    </span>
+                    <CFormInput
+                      style={{ width: '350px' }}
+                      type="text"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="d-inline-block">
+                    <span style={{ display: 'block' }}>
+                      Pin Code<span style={{ color: 'red' }}>*</span>
+                    </span>
+                    <CFormInput
+                      style={{ width: '350px' }}
+                      type="text"
+                      name="pin_code"
+                      value={formData.pin_code}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <div className="d-inline-block mb-3">
+                    <span style={{ display: 'block' }}>
+                      Country<span style={{ color: 'red' }}>*</span>
+                    </span>
+                    <CFormInput
+                      style={{ width: '350px' }}
+                      type="text"
+                      name="country"
+                      value={formData.country}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="d-inline-block">
+                    <span style={{ display: 'block' }}>
+                      Phone<span style={{ color: 'red' }}>*</span>
+                    </span>
+                    <CFormInput
+                      style={{ width: '350px' }}
+                      type="text"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="d-inline-block">
+                    <span style={{ display: 'block' }}>
+                      City<span style={{ color: 'red' }}>*</span>
+                    </span>
+                    <CFormInput
+                      style={{ width: '350px' }}
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="mt-5">
+                  <Button className="text-blue-500" onClick={handleSave}>
+                    Save
+                  </Button>
+                </div>
+              </div>
+            </div>
+          {/* )} */}
+        </div>
+      )}
+    </>
+  )
+}
+
+export default Address

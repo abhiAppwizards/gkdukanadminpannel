@@ -1,20 +1,19 @@
-// DropDown.js
-import React, { useState } from 'react';
-import PropTypes from 'prop-types'; 
-import { Form } from 'react-bootstrap';
-import Select from 'react-select';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { Form } from 'react-bootstrap'
+import Select from 'react-select'
+import { Container, Row, Col } from 'react-bootstrap'
 
-function DropDown({ optionsData, label }) {
-  const [selectedValues, setSelectedValues] = useState({ category: null });
+function DropDown({ optionsData, value, label, onChange }) {
 
-  const handleCategoryChange = (selectedOption) => {
-    setSelectedValues({
-      category: selectedOption,
-      // subcategory: null,
-      // subsubcategory: null,
-    });
-  };
+  const selectOptions = optionsData.map((option) => ({
+    value: option._id,
+    label: option.title,
+  }))
+
+  const handleChange = (selectedOption) => {
+    onChange(selectedOption.value)
+  }
 
   return (
     <Container>
@@ -23,9 +22,9 @@ function DropDown({ optionsData, label }) {
           <Form.Group>
             <Form.Label>{label}</Form.Label>
             <Select
-              value={selectedValues.category}
-              onChange={handleCategoryChange}
-              options={optionsData}
+              value={selectOptions.find(option => option.value === value)}
+              onChange={handleChange}
+              options={selectOptions}
               isSearchable
               placeholder="Search..."
               styles={{
@@ -36,11 +35,9 @@ function DropDown({ optionsData, label }) {
                 }),
                 control: (provided, state) => ({
                   ...provided,
-                  width: '150px',
                 }),
                 menu: (provided, state) => ({
                   ...provided,
-                  width: '150px',
                 }),
               }}
             />
@@ -48,13 +45,15 @@ function DropDown({ optionsData, label }) {
         </Col>
       </Row>
     </Container>
-  );
+  )
 }
 
 // PropTypes validation
 DropDown.propTypes = {
-  optionsData: PropTypes.array.isRequired, 
+  optionsData: PropTypes.array.isRequired,
   label: PropTypes.string.isRequired,
-};
+  value: PropTypes.string, 
+  onChange: PropTypes.func.isRequired,
+}
 
-export default DropDown;
+export default DropDown
