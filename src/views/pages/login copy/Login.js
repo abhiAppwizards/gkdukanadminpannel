@@ -60,7 +60,7 @@ const Login = () => {
         .then((data) => {
           console.log(data)
           // Set user email in local storage
-          localStorage.setItem('loginUser', username);
+          localStorage.setItem('loginadmin', username);
 
           // Navigate to the dashboard or any other route
           navigate('/dashboard');

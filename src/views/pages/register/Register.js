@@ -16,14 +16,16 @@ import CIcon from '@coreui/icons-react'
 import { Link } from 'react-router-dom'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useNavigate } from 'react-router-dom'
+import config from 'src/config'
 
 
 const Register = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('')
+  const [admin, setAdmin] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+  const [phoneNumber, setPhoneNumbet] = useState('')
   const [error, setError] = useState(null)
 
   const isValidEmail = (value) => {
@@ -41,30 +43,29 @@ const Register = () => {
       setError('Invalid email address');
     } else {
       // Assuming the API endpoint for vendor registration is 'http://localhost:3000/vendors/auth/signup'
-      fetch('http://localhost:8080/vendors/auth/signup', {
+      fetch(`${config.baseURL}/admin/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          // Customize the payload based on your actual registration requirements
-          name: username, // Assuming companyName for vendor registration
-          email: email,
+          adminName: admin, 
+          email: email, 
           password: password,
+          phoneNumber:phoneNumber
         }),
       })
         .then(async (response) => {
           const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.error || 'Registration failed. Please check your details and try again.');
+          if (data.success === false) {
+            throw new Error(data.message || 'Registration failed. Please check your details and try again.');
           }
 
           return data;
         })
         .then((data) => {
           // Handle the response from the server
-          console.log(data) // You may want to handle further actions
+          console.log('submitted data',data) 
           navigate('/dashboard');
         })
         .catch((error) => {
@@ -94,10 +95,10 @@ const Register = () => {
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
-                        placeholder="Store Name" // Assuming companyName for vendor registration
+                        placeholder="Your Name" 
                         autoComplete="name"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={admin}
+                        onChange={(e) => setAdmin(e.target.value)}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-3">
@@ -107,6 +108,15 @@ const Register = () => {
                         autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>@</CInputGroupText>
+                      <CFormInput
+                        placeholder="Phone Number"
+                        autoComplete="phoneNumber"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumbet(e.target.value)}
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-3">

@@ -1,5 +1,5 @@
 const config = {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'https://plankton-app-k48gt.ondigitalocean.app',
   };
   
   export default config;
