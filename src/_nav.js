@@ -84,23 +84,29 @@ const _nav = [
       },
     ],
   },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Attributes',
+  //   to: '/attributes',
+  //   icon: <CIcon icon={cilList} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'All Attributes',
+  //       to: '/attributes/all',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Attribute',
+  //       to: '/attributes/add',
+  //     },
+  //   ],
+  // },
   {
-    component: CNavGroup,
+    component: CNavItem,
     name: 'Attributes',
     to: '/attributes',
-    icon: <CIcon icon={cilList} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'All Attributes',
-        to: '/attributes/all',
-      },
-      {
-        component: CNavItem,
-        name: 'Add Attribute',
-        to: '/attributes/add',
-      },
-    ],
+    icon: <CIcon icon={cilCreditCard} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,

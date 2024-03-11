@@ -18,7 +18,7 @@ function BankDetails() {
   const [isDirty, setIsDirty] = useState(false); 
 
   const navigate = useNavigate();
-  const token = localStorage.getItem('vendorToken');
+  const token = localStorage.getItem('adminToken');
 
   useEffect(() => {
     setLoading(true);
@@ -27,7 +27,7 @@ function BankDetails() {
 
   const getBankDetails = async () => {
     try {
-      const response = await axios.get(`${config.baseURL}/vendor/settings/bank-details`, {
+      const response = await axios.get(`${config.baseURL}/admin/settings/bank-details`, {
         headers: {
           authorization: token,
         },
@@ -50,7 +50,7 @@ function BankDetails() {
     setButtonLoading(true);
     try {
       if (bankData) {
-        await axios.put(`${config.baseURL}/vendor/settings/bank-details`,
+        await axios.put(`${config.baseURL}/admin/settings/bank-details`,
           formData,
           {
             headers: {
@@ -60,7 +60,7 @@ function BankDetails() {
         );
         toast.success('Bank details updated successfully');
       } else {
-        await axios.post(`${config.baseURL}/vendor/settings/bank-details/add`, formData, {
+        await axios.post(`${config.baseURL}/admin/settings/bank-details`, formData, {
           headers: {
             authorization: token,
           },

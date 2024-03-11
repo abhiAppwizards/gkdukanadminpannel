@@ -21,7 +21,7 @@ function Address() {
   const [formChanged, setFormChanged] = useState(false); 
 
   const navigate = useNavigate();
-  const token = localStorage.getItem('vendorToken');
+  const token = localStorage.getItem('adminToken');
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +30,7 @@ function Address() {
 
   const getAddress = async () => {
     try {
-      const response = await axios.get(`${config.baseURL}/vendor/settings/addresses`, {
+      const response = await axios.get(`${config.baseURL}/admin/settings/addresses`, {
         headers: {
           authorization: token,
         },
@@ -50,7 +50,7 @@ function Address() {
     try {
       if (addressData && addressData.length > 0) {
         await axios.put(
-          `${config.baseURL}/vendor/settings/addresses/${addressData[0]._id}`,
+          `${config.baseURL}/admin/settings/addresses/${addressData[0]._id}`,
           formData,
           {
             headers: {
@@ -60,7 +60,7 @@ function Address() {
         );
         toast.success('Address updated successfully');
       } else {
-        await axios.post(`${config.baseURL}/vendor/settings/addresses`, formData, {
+        await axios.post(`${config.baseURL}/admin/settings/addresses`, formData, {
           headers: {
             authorization: token,
           },

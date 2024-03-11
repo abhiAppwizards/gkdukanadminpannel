@@ -92,6 +92,11 @@ const routes = [
   { path: '/categories', name: 'Categories', element: Cards, exact: true },
   { path: '/categories/all', name: 'All', element: AllCategories },
   { path: '/categories/add', name: 'Add', element: AddCategories },
+  //Details
+  { path: '/details', name: 'details', element: Cards, exact: true },
+  { path: '/details/bankdetails', name: 'Bank Details', element: BankDetails },
+  { path: '/details/address', name: 'Address Details', element: Address },
+  { path: '/categories/add', name: 'Add', element: AddCategories },
   //rto
   { path: '/rtoorders', name: 'Rto Orders', element: RtoOrders },
   //vendors
@@ -110,8 +115,7 @@ const routes = [
   //Reviews
   { path: '/reviews', name: 'Reviews', element: Reviews },
   //Attributes
-  { path: '/attributes', name: 'Attributes', element: Cards, exact: true },
-  { path: '/attributes/all', name: 'all ', element: AllAttributes },
+  { path: '/attributes', name: 'Attributes ', element: AllAttributes },
   //Support
   { path: '/support', name: 'Support', element: Support },
   { path: '/support/messages/:id', name: 'Messages', element: SupportMessages },

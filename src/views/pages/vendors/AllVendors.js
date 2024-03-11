@@ -3,12 +3,16 @@ import config from 'src/config'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import VendorView from './vendorView'
+import VendorPopup from './vendorPopup'
 
 const AllVendors = ({}) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [vendors, setVendores] = useState([])
   const [selectedVendorId, setSelectedVendorId] = useState(null)
   const [isVendorViewOpen, setIsVendorViewOpen] = useState(false)
+  
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const vendorsPerPage = 10
 
   useEffect(() => {
@@ -24,6 +28,14 @@ const AllVendors = ({}) => {
       console.log(error)
     }
   }
+
+  const handleEdit = (id) => {
+    setEditingId(id);
+    setIsPopupOpen(true);
+  };
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const handleIconClick = (vendorId) => {
     setSelectedVendorId(vendorId)
@@ -132,25 +144,27 @@ const AllVendors = ({}) => {
                   <td className="px-6 py-4 text-center">{vendor.store_name}</td>
                   <td className="rc-table-cell" style={{ textAlign: 'center' }}>
                     <div className="inline-flex items-center w-auto gap-3">
-                      <button onClick={() => handleIconClick(vendor._id)}>
+                      <button
+                        title="Edit"
+                        className="text-base transition duration-200 hover:text-heading"
+                        onClick={() => handleEdit(vendor._id)}
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          width="18"
+                          viewBox="0 0 20.547 20.299"
+                          fill="currentColor"
+                          width="15"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                          ></path>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
+                          <g stroke="currentColor" strokeWidth=".4">
+                            <path
+                              data-name="Path 78"
+                              d="M18.659 12.688a.5.5 0 00-.5.5v4.423a1.5 1.5 0 01-1.494 1.494H2.691A1.5 1.5 0 011.2 17.609V4.629a1.5 1.5 0 011.494-1.494h4.419a.5.5 0 100-1H2.691A2.493 2.493 0 00.2 4.629v12.98A2.493 2.493 0 002.691 20.1h13.976a2.493 2.493 0 002.491-2.491v-4.423a.5.5 0 00-.5-.5zm0 0"
+                            ></path>
+                            <path
+                              data-name="Path 79"
+                              d="M18.96.856a2.241 2.241 0 00-3.17 0L6.899 9.739a.5.5 0 00-.128.219l-1.169 4.219a.5.5 0 00.613.613l4.219-1.169a.5.5 0 00.219-.128l8.886-8.887a2.244 2.244 0 000-3.17zm-10.971 9.21l7.273-7.273 2.346 2.346-7.273 7.273zm-.469.94l1.879 1.875-2.592.718zm11.32-7.1l-.528.528-2.346-2.345.528-.528a1.245 1.245 0 011.761 0l.585.584a1.247 1.247 0 010 1.761zm0 0"
+                            ></path>
+                          </g>
                         </svg>
                       </button>
                     </div>
@@ -192,6 +206,7 @@ const AllVendors = ({}) => {
           </button>
         </div>
       </div>
+      {isPopupOpen && <VendorPopup onClose={handleClosePopup} editingId={editingId} onCall={AllVendors} />}
     </div>
   )
 }
