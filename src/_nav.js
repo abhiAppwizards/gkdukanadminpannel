@@ -48,24 +48,24 @@ const _nav = [
     to: '/rtoorders',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
-  {
-    component: CNavGroup,
-    name: 'Catalogs',
-    to: '/catalogs',
-    icon: <CIcon icon={cilList} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'All Catalogs',
-        to: '/catalogs/all',
-      },
-      {
-        component: CNavItem,
-        name: 'Add Product',
-        to: '/catalogs/add',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Catalogs',
+  //   to: '/catalogs',
+  //   icon: <CIcon icon={cilList} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'All Catalogs',
+  //       to: '/catalogs/all',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Add Product',
+  //       to: '/catalogs/add',
+  //     },
+  //   ],
+  // },
   {
     component: CNavGroup,
     name: 'Categories',
@@ -168,23 +168,23 @@ const _nav = [
       },
     ],
   },
-  {
-    component: CNavGroup,
-    name: 'Pages',
-    icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Bank Details',
-        to: '/details/bankdetails',
-      },
-      {
-        component: CNavItem,
-        name: 'Address',
-        to: '/details/address',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Pages',
+  //   icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Bank Details',
+  //       to: '/details/bankdetails',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Address',
+  //       to: '/details/address',
+  //     },
+  //   ],
+  // },
 ]
 
 export default _nav

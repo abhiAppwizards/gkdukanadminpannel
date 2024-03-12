@@ -22,7 +22,7 @@ function TicketMessages() {
   const handleSend = async () => {
     try {
       const response = await axios.post(
-        `${config.baseURL}/admin/support-ticket/messages/${id}`,
+        `${config.baseURL}/admin/settings/support-ticket/messages/${id}`,
         {
           message: input,
         },
@@ -47,7 +47,7 @@ function TicketMessages() {
   const getMessages = async () => {
     try {
       const response = await axios.get(
-        `${config.baseURL}/admin/support-ticket/${id}`,
+        `${config.baseURL}/admin/settings/support-ticket/${id}`,
         {
           headers: {
             authorization: token,

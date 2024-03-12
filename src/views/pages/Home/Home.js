@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import ImgComponent from './ImgComponent'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import config from 'src/config'
 
@@ -12,6 +14,7 @@ function Home() {
     preview5: null,
     preview6: null,
   })
+  const [loading,setLoading] = useState(false)
 
   const handleChange = (event, index) => {
     const file = event.target.files[0]
@@ -23,8 +26,8 @@ function Home() {
   }
 
   const handleSubmit = async (event) => {
+    setLoading(true)
     event.preventDefault()
-
     const formData = new FormData(event.target)
 
     const topSlider = []
@@ -99,14 +102,18 @@ function Home() {
 
     try {
       const response = await axios.post(`${config.baseURL}/admin/home`, postData)
-      console.log('home data', response.data)
+      toast.success('Home Data Uploaded Successfully')
+      setLoading(false)
     } catch (error) {
-      console.error(error)
+      // console.error(error)
+      toast.error(error.message)
+      setLoading(false)
     }
   }
 
   return (
     <>
+    <ToastContainer/>
       <form onSubmit={handleSubmit}>
         <div className="rounded bg-white p-4 shadow md:p-8 mb-8 ">
           <h2 className=" relative text-lg font-semibold text-heading ">Top Slider Section</h2>
@@ -119,6 +126,7 @@ function Home() {
             />
             <input
               name="link1"
+              placeholder='Your Link'
               className="border-2 border-gray-400 outline-none  w-96 h-10 rounded-md px-2"
             />
           </div>
@@ -131,6 +139,7 @@ function Home() {
             />
             <input
               name="link2"
+              placeholder='Your Link'
               className="border-2 border-gray-400 outline-none  w-96 h-10 rounded-md px-2"
             />
           </div>
@@ -143,6 +152,7 @@ function Home() {
             />
             <input
               name="link3"
+              placeholder='Your Link'
               className="border-2 border-gray-400 outline-none  w-96 h-10 rounded-md px-2"
             />
           </div>
@@ -159,6 +169,7 @@ function Home() {
             />
             <input
               name="link4"
+              placeholder='Top Banner Link'
               className="border-2 border-gray-400 outline-none  w-96 h-10 rounded-md px-2"
             />
           </div>
@@ -172,10 +183,12 @@ function Home() {
             <h1 className="font-semibold">Category 1</h1>
             <input
               name="category_name1"
+              placeholder='Category Name'
               className="border-2 border-gray-400 outline-none  w-40 h-10 rounded-md px-2"
             />
             <input
               name="link5"
+              placeholder='Category Link'
               className="border-2 border-gray-400 outline-none  w-40 h-10 rounded-md px-2"
             />
           </div>
@@ -183,10 +196,12 @@ function Home() {
             <h1 className="font-semibold">Category 2</h1>
             <input
               name="category_name2"
+              placeholder='Category Name'
               className="border-2 border-gray-400 outline-none  w-40 h-10 rounded-md px-2"
             />
             <input
               name="link6"
+              placeholder='Category Link'
               className="border-2 border-gray-400 outline-none  w-40 h-10 rounded-md px-2"
             />
           </div>
@@ -194,10 +209,12 @@ function Home() {
             <h1 className="font-semibold">Category 3</h1>
             <input
               name="category_name3"
+              placeholder='Category Name'
               className="border-2 border-gray-400 outline-none  w-40 h-10 rounded-md px-2"
             />
             <input
               name="link7"
+              placeholder='Category Link'
               className="border-2 border-gray-400 outline-none  w-40 h-10 rounded-md px-2"
             />
           </div>
@@ -214,6 +231,7 @@ function Home() {
             />
             <input
               name="link8"
+              placeholder='Second Banner Link'
               className="border-2 border-gray-400 outline-none  w-96 h-10 rounded-md px-2"
             />
           </div>
@@ -230,6 +248,7 @@ function Home() {
             />
             <input
               name="link9"
+              placeholder='Third Banner Link'
               className="border-2 border-gray-400 outline-none  w-96 h-10 rounded-md px-2"
             />
           </div>
@@ -288,8 +307,9 @@ function Home() {
         <button
           type="submit"
           className="border px-4 py-2 mb-5 rounded bg-green-400 text-white hover:bg-gray-400"
+          disabled={loading}
         >
-          Submit
+          {loading ? "Submiting..." : "Submit"}
         </button>
       </form>
     </>

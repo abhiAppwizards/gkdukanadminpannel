@@ -274,7 +274,6 @@ const AllAttributes = () => {
                 <span style={{ display: 'block' }}>
                   Type<span style={{ color: 'red' }}>*</span>
                 </span>
-                {/* <div className=" "> */}
                 <Select
                   value={selectedType}
                   onChange={handleTypeChange}
@@ -296,7 +295,6 @@ const AllAttributes = () => {
                     }),
                   }}
                 />
-                {/* </div> */}
               </div>
             </div>
           </div>
@@ -365,10 +363,9 @@ const AllAttributes = () => {
                   <td className="px-6 py-4 text-center">{attribute.type}</td>
                   <td className="rc-table-cell" style={{ textAlign: 'center' }}>
             <div className="inline-flex items-center w-auto gap-3">
-              <div
+              <button
                 title="Edit"
                 className="text-base transition duration-200 hover:text-heading"
-                // to={`/categorys/all/${category._id}`}
                 onClick={() => handleEdit(attribute._id)}
               >
                 <svg
@@ -388,7 +385,7 @@ const AllAttributes = () => {
                     ></path>
                   </g>
                 </svg>
-              </div>
+              </button>
               
               <button
                 className="text-red-500 transition duration-200 hover:text-red-600 focus:outline-none"
