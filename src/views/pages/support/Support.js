@@ -39,7 +39,7 @@ function Support() {
 
   const getTickits = async () => {
     try {
-      const res = await axios.get(`${config.baseURL}/admin/support-ticket`, {
+      const res = await axios.get(`${config.baseURL}/admin/settings/support-ticket`, {
         headers: {
           authorization: token,
         },
@@ -55,7 +55,7 @@ function Support() {
     setLoading(true)
     try {
       const response = await axios.post(
-        `${config.baseURL}/admin/support-ticket`,
+        `${config.baseURL}/admin/settings/support-ticket`,
         {
           title: formData.title,
           description: formData.description,
