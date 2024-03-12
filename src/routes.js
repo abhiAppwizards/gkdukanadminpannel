@@ -40,7 +40,6 @@ const AddCategories = React.lazy(() => import('./views/pages/categories/AddCateg
 
 //Vendors
 const AllVendors = React.lazy(()=> import('./views/pages/vendors/AllVendors'))
-const AddVendor = React.lazy(()=> import('./views/pages/vendors/AddVendor'))
 const VendorView = React.lazy(()=> import('./views/pages/vendors/vendorView'))
 
 //Reviews
@@ -101,7 +100,6 @@ const routes = [
   { path: '/vendors', name: 'Vendors', element: Cards, exact: true },
   {path: '/vendors/all', name: 'All', element: AllVendors},
   {path: '/vendors/all/:id', name: 'vendor', element: VendorView},
-  {path: '/vendors/add', name: 'Add', element: AddVendor},
   //Payments
   { path: '/payments', name: 'Payments', element: Payments },
   //Notice
