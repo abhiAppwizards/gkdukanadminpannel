@@ -51,16 +51,11 @@ const Login = () => {
           if (!response.ok) {
             throw new Error(data.message || 'Login failed. Please check your details and try again.')
           }
-
           localStorage.setItem('adminToken', data.token)
           return data
         })
         .then((data) => {
-          // console.log(data)
-          // Set user email in local storage
           localStorage.setItem('loginadmin', email)
-
-          // Navigate to the dashboard or any other route
           navigate('/dashboard')
         })
         .catch((error) => {
@@ -90,7 +85,7 @@ const Login = () => {
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
-                        placeholder="Email" // Assuming email is used for vendor login
+                        placeholder="Email" 
                         autoComplete="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}

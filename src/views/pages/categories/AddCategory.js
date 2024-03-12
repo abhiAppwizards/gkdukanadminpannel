@@ -9,7 +9,6 @@ import axios from 'axios'
 function AddCategory() {
   const [show, setShow] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState(null)
-  // console.log('selectedCategory',selectedCategory)
   const [formData, setFormData] = useState({
     title: '',
     description: '',
