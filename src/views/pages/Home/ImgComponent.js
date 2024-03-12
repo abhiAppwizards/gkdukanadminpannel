@@ -5,8 +5,9 @@ function ImgComponent() {
 
   const handleChange = (event) => {
     const file = event.target.files[0]
-    console.log('File selected:', file)
-    setPreview(URL.createObjectURL(file))
+    const url = URL.createObjectURL(file)
+    console.log(url)
+    setPreview(url)
   }
 
   return (

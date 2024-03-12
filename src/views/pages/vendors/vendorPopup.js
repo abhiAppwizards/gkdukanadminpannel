@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import config from 'src/config';
 
-const VendorPopup = ({ onClose, editingId, onCall, component }) => {
+const VendorPopup = ({ onClose, editingId, onCall }) => {
   const [email, setEmail] = useState('');
   const [storeName, setStoreName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -40,7 +40,6 @@ const VendorPopup = ({ onClose, editingId, onCall, component }) => {
           email: email,
           store_name: storeName,
           phoneNumber: phoneNumber,
-          // Add other fields as needed
         },
         {
           headers: {
@@ -48,7 +47,7 @@ const VendorPopup = ({ onClose, editingId, onCall, component }) => {
           },
         }
       );
-      console.log('Vendor data updated successfully', response.data);
+      // console.log('Vendor data updated successfully', response.data);
       onCall();
       onClose();
     } catch (error) {
